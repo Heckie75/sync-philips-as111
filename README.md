@@ -7,12 +7,12 @@ This is a little python script that is used in order to set the current time of 
 
 Usage:
 ```
-USAGE: philips_a11_settime <mac>
+USAGE: sync-philips_as111 <mac>
 ```
 
 Example:
 ```
-$ ./philips_a11_settime 00:1D:DF:51:53:2B
+$ ./sync-philips_as111 00:1D:DF:51:53:2B
 Connect to 00:1D:DF:51:53:2B
 Set current time 2018-08-13 20:07:57
 Sync finished
