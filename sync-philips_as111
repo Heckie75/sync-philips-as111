@@ -6,7 +6,7 @@ from bluetooth import *
 
 if len(sys.argv) != 2:
     print("\nSync desktop time with Philips A111/12 docking station")
-    print("\nUSAGE: philips_a11_settime <mac>\n")
+    print("\nUSAGE: sync-philips_as111 <mac>\n")
     exit(1)
 
 # mac = "00:1D:DF:51:53:2B"
