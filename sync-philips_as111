@@ -1,0 +1,39 @@
+#!/usr/bin/python
+
+import sys
+import datetime
+from bluetooth import *
+
+if len(sys.argv) != 2:
+    print("\nSync desktop time with Philips A111/12 docking station")
+    print("\nUSAGE: philips_a11_settime <mac>\n")
+    exit(1)
+
+# mac = "00:1D:DF:51:53:2B"
+
+mac = sys.argv[1]
+
+dt_now = datetime.datetime.now()
+
+cc  = dt_now.year / 100
+yy  = dt_now.year % 100
+mm  = dt_now.month
+dd  = dt_now.day
+h24 = dt_now.hour
+m   = dt_now.minute
+s   = dt_now.second
+
+print("Connect to %s" % mac)
+
+client_socket=BluetoothSocket( RFCOMM )
+client_socket.connect((mac, 1))
+
+print("Set current time %02d%02d-%02d-%02d %02d:%02d:%02d" % (cc, yy, mm, dd, h24, m ,s))
+
+# \x99 \x0B \x87 \x11 \x08 \xYY \xYY \xMM \xDD \xhh \xmm \xss \x11
+bytes = [153, 11,  135, 17,  8, cc, yy, mm, dd, h24, m, s, 17]
+client_socket.send("".join(map(chr, bytes)))
+client_socket.close()    
+
+print("Sync finished")
+exit(0)
