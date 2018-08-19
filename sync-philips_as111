@@ -17,7 +17,7 @@ dt_now = datetime.datetime.now()
 
 cc  = dt_now.year / 100
 yy  = dt_now.year % 100
-mm  = dt_now.month
+mm  = dt_now.month - 1
 dd  = dt_now.day
 h24 = dt_now.hour
 m   = dt_now.minute
@@ -25,15 +25,38 @@ s   = dt_now.second
 
 print("Connect to %s" % mac)
 
-client_socket=BluetoothSocket( RFCOMM )
+client_socket = BluetoothSocket( RFCOMM )
 client_socket.connect((mac, 1))
 
 print("Set current time %02d%02d-%02d-%02d %02d:%02d:%02d" % (cc, yy, mm, dd, h24, m ,s))
 
-# \x99 \x0B \x87 \x11 \x08 \xYY \xYY \xMM \xDD \xhh \xmm \xss \x11
+# retrieve model name
+# bytes = [153, 03, 156, 8, 92]
+
+# retrieve model version
+# bytes = [153, 03, 133, 19, 104]
+
+# set time
+# \x99 \x0B \x87(seq.) \x11 \x08 \xYY \xYY \xMM \xDD \xhh \xmm \xss \x11(checksum)
 bytes = [153, 11,  135, 17,  8, cc, yy, mm, dd, h24, m, s, 17]
+
 client_socket.send("".join(map(chr, bytes)))
-client_socket.close()    
+
+client_socket.settimeout(2)
+response = ""
+try:
+	while True:
+		r = client_socket.recv(255)
+		if not r:
+			break
+		response = response + r
+		if r.find(";") != -1: # we have reach end of message
+			break
+except:
+	pass
+print "Response: (%s)" % ''.join(r'\x{0:x}'.format(ord(c)) for c in response)
+
+client_socket.close()
 
 print("Sync finished")
 exit(0)
