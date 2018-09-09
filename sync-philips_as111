@@ -4,9 +4,6 @@ import sys
 import datetime
 from bluetooth import *
 
-OUT_ASCII  = "ascii"
-OUT_BINARY = "binary"
-
 device = {
     "mac" : "",
     "name" : "<unknown>",
@@ -93,12 +90,12 @@ def retrieve_device_info(client_socket):
 
     try:
         # retrieve model name
-        bytes = [153, 03, 156, 8, 92]
+        bytes = [153, 3, 156, 8, 92]
         s = send(client_socket, bytes)
         device["name"] = s[4:-1]
 
         # retrieve model version
-        bytes = [153, 03, 133, 19, 104]
+        bytes = [153, 3, 133, 19, 104]
         s = send(client_socket, bytes)
         device["version"] = s[5:-3]
         return True
@@ -141,7 +138,7 @@ if __name__ == "__main__":
         exit(1)
 
     print("\nConnected device is:")
-    print("name:    %s" % device["name"])
+    print("name:    Philips %s" % device["name"])
     print("version: %s" % device["version"])
 
     ts = get_timestamp_as_array()
