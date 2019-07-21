@@ -32,7 +32,8 @@ def connect(device):
         client_socket.connect((device["mac"], 1))
         client_socket.settimeout(2)
 
-    except:
+    except btcommon.BluetoothError as error:
+        print("Connection failed, %s" % error)
         return None
 
     return client_socket
