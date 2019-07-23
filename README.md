@@ -22,7 +22,7 @@ Sync finished
 Before you can use this script you must pair the device.
 
 
-**Note*
+**Note**
 On Ubuntu this script runs as expected after paring. But on Raspbian it was a hard to make it work since I've always got the error 'connection refused'.
 I think that the following command make it work
 ```
