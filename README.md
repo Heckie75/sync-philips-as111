@@ -21,6 +21,17 @@ Sync finished
 ## Pre-condition
 Before you can use this script you must pair the device.
 
+
+**Note*
+On Ubuntu this script runs as expected after paring. But on Raspbian it was a hard to make it work since I've always got the error 'connection refused'.
+I think that the following command make it work
+```
+sudo hciconfig hci0 sspmode 0
+```
+
+For PIN use 0000.
+
+
 ## API
 In order to sync the time you need an RFCOMM connection. Port is 1. 
 
