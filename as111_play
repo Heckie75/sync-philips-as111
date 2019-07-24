@@ -1,0 +1,7 @@
+#!/bin/bash
+MAC="00:1D:DF:51:53:2B"
+
+DIR=$(dirname $0)
+
+${DIR}/as111.py $MAC
+${DIR}/omxplay $1 $2

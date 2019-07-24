@@ -1,0 +1,75 @@
+#!/bin/bash
+
+if [ "$1" == "-t" ]
+then
+  echo "terminating omxplayer"
+  pkill omxplayer
+  exit $?
+fi
+
+if [ "$1" == "" ]
+then
+  echo "no xspf playlist given! Good bye"
+  exit 1
+fi
+
+XSPF_FILE=$1
+
+if [ "$2" == "" ]
+then
+  echo "nothing to play! Good bye"
+  exit 1
+fi
+
+title_w_url=$(awk -vt="$2" '
+  BEGIN {
+    IGNORECASE=1;
+    location = "";
+    title = "";
+    tracks = 0;
+    if ( t == "-l" ) {
+      list_all = 1;
+    } else {
+      list_all = 0;
+    }
+  }
+  /<track>/ {
+    tracks = 1;
+  }
+  /<location>/ {
+    match($0, "<location>([^<]+)</location>", s);
+    location = s[1];
+  }
+  /<title>/ {
+    match($0, "<title>([^<]+)</title>", s);
+    title = s[1];
+    if ( title ~ t && tracks == 1 && list_all == 0 ) {
+      print title"\t"location;
+      exit 0;
+    }
+    if ( list_all == 1 ) {
+      print(title"|");
+    }
+  }
+' ${XSPF_FILE})
+
+if [ "$2" == "-l" ]
+then
+  echo ${title_w_url}  | tr "|" "\n" | egrep "^ " | sort -f
+  exit 0
+fi
+
+title=$(echo "${title_w_url}" | cut -f1)
+url=$(echo "${title_w_url}" | cut -f2)
+
+ps -ef | grep omxplayer | grep -v grep > /dev/null
+if [ $? == 0 ]
+then
+  echo "Killing running omxplayer"
+  pkill omxplayer
+fi
+
+echo "Found: ${title}"
+echo "URL: ${url}"
+
+omxplayer --no-keys -o alsa "${url}" &
