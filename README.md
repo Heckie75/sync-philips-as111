@@ -50,3 +50,48 @@ Example is for 2018-08-13 20:30:24
 |                    + first two digits of year in hex, here "14" for 2018
 + static preamble        
 ```
+
+## Setup with Raspberry Pi Zero
+![Raspberry Pi Zero and Philips AS111/12](IMG_20190724_112047570.jpg "Raspberry Pi Zero and Philips AS111/12")
+
+There are two additional scripts so that the Philips AS111/12 turns into a internet radio receiver, i.e.
+
+### omxplay
+
+```omxplay``` is a little script that plays radio stations given in an xspf file, e.g. 
+
+```
+./omxplay Internetradio.xspf 917xfm
+```
+
+Plays the Hamburg music radio station 917xfm. Its URL is taken from *xspf playlist*. 
+
+You can list all stations of *xspf playlist* as follows
+```
+./omxplay /home/heckie/Daten/Musik/Internetradio.xspf -l
+ 104.6 RTL
+ 1Live
+ 89.0 RTL
+ 917xfm
+ Absolut Relax
+ Alsterradio
+ Alternativ FM
+ Antenne 1 Stuttgart
+ Antenne Bayern
+ Antenne Bayern Chillout
+...
+ Deutschlandfunk
+ Deutschlandfunk 24
+ Deutschlandfunk Kultur
+ Deutschlandfunk Nova
+...
+ You FM
+```
+
+
+Run ```./omxplay -t``` in order to stop *omxplayer*.
+
+
+### as111_play
+
+The script ```as111_play``` sychronizes time with Philips AS111/12 before playing music by using ```omxplay```
