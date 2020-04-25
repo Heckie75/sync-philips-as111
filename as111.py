@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import sys
 import datetime
@@ -48,20 +48,12 @@ def disconnect(client_socket):
 
 
 
-def send(client_socket, bytes):
+def send(client_socket, data):
 
-    client_socket.send("".join(map(chr, bytes)))
-
-    raw = ""
     try:
-	    while True:
-		    r = client_socket.recv(255)
-		    if not r:
-			    break
-		    raw = raw + r
-		    # we have reach end of message
-		    if r.find(";") != -1:
-			    break
+        client_socket.send(bytes(data))
+        raw = list(client_socket.recv(255))
+        # we have reach end of message
     except:
 	    pass
 
@@ -74,7 +66,7 @@ def get_timestamp_as_array():
 
     dt_now = datetime.datetime.now()
 
-    cc  = dt_now.year / 100
+    cc  = dt_now.year // 100
     yy  = dt_now.year % 100
     mm  = dt_now.month - 1
     dd  = dt_now.day
@@ -87,18 +79,29 @@ def get_timestamp_as_array():
 
 
 
+def _list_to_string(l):
+    
+    s = ""
+    for c in l:
+        s += chr(c) if c != 0 else ""
+
+    return s
+
+
+
+
 def retrieve_device_info(client_socket):
 
     try:
         # retrieve model name
         bytes = [153, 3, 156, 8, 92]
-        s = send(client_socket, bytes)
-        device["name"] = s[4:-1]
+        raw = send(client_socket, bytes)
+        device["name"] = _list_to_string(raw)[4:-1]
 
         # retrieve model version
         bytes = [153, 3, 133, 19, 104]
-        s = send(client_socket, bytes)
-        device["version"] = s[5:-3]
+        raw = send(client_socket, bytes)
+        device["version"] = _list_to_string(raw)[5:-3]
         return True
 
     except:
@@ -143,7 +146,7 @@ if __name__ == "__main__":
     print("version: %s" % device["version"])
 
     ts = get_timestamp_as_array()
-    print("\nSet current time %02d%02d-%02d-%02d %02d:%02d:%02d" % tuple(ts))
+    print("\nSet current time %02d%02d-%02d-%02d %02d:%02d:%02d" % (ts[0], ts[1], ts[2] + 1, ts[3], ts[4], ts[5], ts[6]))
     if (not set_time(socket, ts)):
         print("Failed to set time.")
         disconnect(socket)
