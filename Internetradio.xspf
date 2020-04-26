@@ -1,0 +1,1351 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" xmlns:vlc="http://www.videolan.org/vlc/playlist/ns/0/" version="1">
+    <title>Wiedergabeliste</title>
+    <trackList>
+        <track>
+            <location>https://mp3channels.rockantenne.hamburg/917xfm</location>
+            <title>917xfm</title>
+            <image>http://static.radio.de/images/broadcasts/0e/ac/9255/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>0</vlc:id>
+            </extension>
+        </track>        
+        <track>
+            <location>http://ice3.somafm.com/covers-128-mp3</location>
+            <title>Soma FM covers</title>
+            <image>https://somafm.com/img3/covers-400.jpg</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>1</vlc:id>
+            </extension>
+        </track>        
+        <track>
+            <location>http://ice3.somafm.com/deepspaceone-128-mp3</location>
+            <title>Soma FM deep space one</title>
+            <image>https://somafm.com/img3/deepspaceone-400.jpg</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>2</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://ice3.somafm.com/indiepop-128-mp3</location>
+            <title>Soma FM indie pop</title>
+            <image>https://somafm.com/img3/indiepop-400.jpg</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>3</vlc:id>
+            </extension>
+        </track>  
+        <track>
+            <location>http://ice3.somafm.com/lush-128-mp3</location>
+            <title>Soma FM lush</title>
+            <image>https://somafm.com/img3/lush-400.jpg</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>4</vlc:id>
+            </extension>
+        </track>  
+        <track>
+            <location>http://ice3.somafm.com/spacestation-128-mp3</location>
+            <title>Soma FM space station</title>
+            <image>https://somafm.com/img3/spacestation-400.jpg</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>5</vlc:id>
+            </extension>
+        </track>    
+        <track>
+            <location>http://stream.antenne1.de/stream1/livestream.mp3</location>
+            <title>Antenne 1 Stuttgart</title>
+            <image>http://static.radio.de/images/broadcasts/ac/1a/2417/2/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>6</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3channels.webradio.antenne.de:80/antenne</location>
+            <title>Antenne Bayern</title>
+            <image>http://static.radio.de/images/broadcasts/81/d7/9111/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>7</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3channels.webradio.antenne.de/chillout</location>
+            <title>Antenne Bayern Chillout</title>
+            <image>http://static.radio.de/images/broadcasts/21/d5/9117/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>8</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3channels.webradio.antenne.de/fresh</location>
+            <title>Antenne Bayern Fresh</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/439_288x162_2017-10-24-13-15-07-424.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>9</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://rbb-antennebrandenburg-live.cast.addradio.de/rbb/antennebrandenburg/live/mp3/128/stream.mp3</location>
+            <title>Antenne Brandenburg</title>
+            <image>http://static.radio.de/images/broadcasts/2d/3a/2258/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>10</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.antenne.com/antenne-nds/mp3-128</location>
+            <title>Antenne Niedersachsen</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/29_288x162_2017-05-02-17-00-35-544.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>11</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://server2.digital-webstream.de:23780</location>
+            <title>Antenne Südtirol</title>
+            <image>http://static.radio.de/images/broadcasts/8c/26/4249/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>12</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://asm.akacast.akamaistream.net/7/495/305516/v1/gnl.akacast.akamaistream.net/asm</location>
+            <title>Antenne Saar</title>
+            <image>http://static.radio.de/images/broadcasts/bd/7d/2403/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>13</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.antennethueringen.de/live/mp3-192/web/</location>
+            <title>Antenne Thüringen</title>
+            <image>http://static.radio.de/images/broadcasts/93/1a/2108/3/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>14</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://streaming.apolloradio.de/apolloradio_simulcast_192k_mp3</location>
+            <title>Apollo Radio</title>
+            <image>http://static.radio.de/images/broadcasts/48/9d/1424/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>15</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://br-b5aktuell-live.cast.addradio.de/br/b5aktuell/live/mp3/128/stream.mp3</location>
+            <title>B5 aktuell</title>
+            <image>http://static.radio.de/images/broadcasts/24/3f/2249/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>16</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.baden.fm:8006/badenfm?rpempv=3.1.101;</location>
+            <title>Baden FM</title>
+            <image>http://static.radio.de/images/broadcasts/1b/62/9459/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>17</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://topradio-de-hz-fal-stream06-cluster01.radiohost.de:80/brf_128</location>
+            <title>Berliner Rundfunk</title>
+            <image>http://static.radio.de/images/broadcasts/1a/0a/2111/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>18</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://streams.bigfm.de/bigfm-deutschland-128-mp3</location>
+            <title>bigFM</title>
+            <image>http://static.radio.de/images/broadcasts/af/e4/1444/3/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>19</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://br-br1-obb.cast.addradio.de/br/br1/obb/mp3/128/stream.mp3</location>
+            <title>BR 1</title>
+            <image>http://static.radio.de/images/broadcasts/10/90/2245/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>20</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://br-br2-sued.cast.addradio.de/br/br2/sued/mp3/128/stream.mp3</location>
+            <title>BR 2</title>
+            <image>http://static.radio.de/images/broadcasts/75/8a/2246/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>21</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://br-br3-live.cast.addradio.de/br/br3/live/mp3/128/stream.mp3</location>
+            <title>BR 3</title>
+            <image>http://static.radio.de/images/broadcasts/df/1f/2247/3/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>22</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://rb-bremeneins-live.cast.addradio.de/rb/bremeneins/live/mp3/128/stream.mp3</location>
+            <title>Bremen 1</title>
+            <image>http://static.radio.de/images/broadcasts/26/50/2263/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>23</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://rb-bremenzwei-live.cast.addradio.de/rb/bremenzwei/live/mp3/128/stream.mp3</location>
+            <title>Bremen 2</title>
+            <image>http://static.radio.de/images/broadcasts/72/cf/18933/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>24</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://rb-bremenvier-live.cast.addradio.de/rb/bremenvier/live/mp3/128/stream.mp3</location>
+            <title>Bremen 4</title>
+            <image>http://static.radio.de/images/broadcasts/cc/bd/2264/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>25</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://bytefm.cast.addradio.de/bytefm/main/mid/stream</location>
+            <title>Byte FM</title>
+            <image>http://static.radio.de/images/broadcasts/8c/51/6349/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>26</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://tuner.m1.fm/chillout.mp3</location>
+            <title>Chillout</title>
+            <image>http://static.radio.de/images/broadcasts/c4/36/39402/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>27</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>https://swr-dasding-live.sslcast.addradio.de/swr/dasding/live/mp3/128/stream.mp3</location>
+            <title>DASDING</title>
+            <image>http://static.radio.de/images/broadcasts/be/1d/2422/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>28</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>https://detektor.fm/stream/mp3/musik/</location>
+            <title>Detektor FM Musik</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/1197_288x162_2017-05-02-17-01-03-722.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>29</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>https://sec-detektorfm.hoerradar.de/detektorfm-wort-mp3-128</location>
+            <title>Detektor FM Wort</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/1196_288x162_2017-05-02-17-01-03-835.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>30</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://st01.dlf.de/dlf/01/128/mp3/stream.mp3</location>
+            <title>Deutschlandfunk</title>
+            <image>http://static.radio.de/images/broadcasts/25/3f/1521/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>31</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://st02.dlf.de/dlf/02/128/mp3/stream.mp3</location>
+            <title>Deutschlandfunk Kultur</title>
+            <image>http://static.radio.de/images/broadcasts/c8/8d/1549/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>32</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://st03.dlf.de/dlf/03/128/mp3/stream.mp3</location>
+            <title>Deutschlandfunk 24</title>
+            <image>http://www.deutschlandfunk.de/themes/dradio/icons/dlfcom/favicon-196x196.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>33</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://st03.dlf.de/dlf/03/128/mp3/stream.mp3</location>
+            <title>Deutschlandfunk Nova</title>
+            <image>http://static.radio.de/images/broadcasts/86/06/8381/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>34</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://rbb-fritz-live.cast.addradio.de/rbb/fritz/live/mp3/128/stream.mp3</location>
+            <title>Fritz</title>
+            <image>http://static.radio.de/images/broadcasts/04/ad/2259/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>35</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3.harmonyfm.de/harmonyfm/hqlivestream.mp3</location>
+            <title>Harmony.fm</title>
+            <image>http://static.radio.de/images/broadcasts/43/a2/8441/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>36</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3.ffh.de/radioffh/hqlivestream.mp3</location>
+            <title>HIT RADIO FFH</title>
+            <image>http://static.radio.de/images/broadcasts/8c/a8/2224/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>37</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://46.105.118.14:13500/;stream.mp3</location>
+            <title>Hitstation FM</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/1203_288x162_2017-10-27-07-00-24-908.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>38</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://hr-hr1-live.cast.addradio.de/hr/hr1/live/mp3/128/stream.mp3</location>
+            <title>HR 1</title>
+            <image>http://static.radio.de/images/broadcasts/3c/1e/1639/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>39</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://hr-hr2-live.cast.addradio.de/hr/hr2/live/mp3/128/stream.mp3</location>
+            <title>HR 2</title>
+            <image>http://static.radio.de/images/broadcasts/84/f0/1640/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>40</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://hr-hr3-live.cast.addradio.de/hr/hr3/live/mp3/128/stream.mp3</location>
+            <title>HR 3</title>
+            <image>http://static.radio.de/images/broadcasts/10/c2/1641/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>41</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://hr-hr4-live.cast.addradio.de/hr/hr4/live/mp3/128/stream.mp3</location>
+            <title>HR 4</title>
+            <image>http://static.radio.de/images/broadcasts/81/c6/1642/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>42</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://hr-hrinfo-live.cast.addradio.de/hr/hrinfo/live/mp3/128/stream.mp3</location>
+            <title>HR Info</title>
+            <image>http://static.radio.de/images/broadcasts/f6/70/1643/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>43</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://rbb-inforadio-live.cast.addradio.de/rbb/inforadio/live/mp3/128/stream.mp3</location>
+            <title>Inforadio rbb</title>
+            <image>http://static.radio.de/images/broadcasts/4c/b8/2260/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>44</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.jam.fm/jamfm-live/mp3-128</location>
+            <title>JAM FM</title>
+            <image>http://static.radio.de/images/broadcasts/d5/e2/2251/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>45</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://rs33.stream24.net/joke-fm.mp3</location>
+            <title>Joke FM</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/1423_288x162_2017-09-20-17-15-22-362.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>46</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://klassikradio.hoerradar.de/klassikradio-live-mp3-mq</location>
+            <title>Klassik Radio</title>
+            <image>http://static.radio.de/images/broadcasts/1e/f9/1684/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>47</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://rbb-kulturradio-live.cast.addradio.de/rbb/kulturradio/live/mp3/128/stream.mp3</location>
+            <title>RBB Kulturradio</title>
+            <image>http://static.radio.de/images/broadcasts/bc/7f/2399/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>48</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mdr-284280-0.cast.mdr.de/mdr/284280/0/mp3/high/stream.mp3</location>
+            <title>MDR Sachsen</title>
+            <image>http://static.radio.de/images/broadcasts/c2/ba/2255/2/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>49</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mdr-990801-0.cast.mdr.de/mdr/990801/0/mp3/high/stream.mp3</location>
+            <title>MDR Schlagerwelt</title>
+            <image>http://static.radio.de/images/broadcasts/91/e1/40885/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>50</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mdr-284310-0.cast.mdr.de/mdr/284310/0/mp3/high/stream.mp3</location>
+            <title>MDR Kultur</title>
+            <image>http://static.radio.de/images/broadcasts/23/21/2342/2/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>51</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mdr-284340-0.cast.mdr.de/mdr/284340/0/mp3/high/stream.mp3</location>
+            <title>MDR Aktuell</title>
+            <image>http://static.radio.de/images/broadcasts/25/e2/1729/2/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>52</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mdr-284320-0.cast.mdr.de/mdr/284320/0/mp3/high/stream.mp3</location>
+            <title>MDR Jump</title>
+            <image>http://static.radio.de/images/broadcasts/7d/12/1661/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>53</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mdr-284350-0.cast.mdr.de/mdr/284350/0/mp3/high/stream.mp3</location>
+            <title>MDR Klassik</title>
+            <image>http://static.radio.de/images/broadcasts/85/13/1730/2/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>54</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mdr-284311-1.cast.mdr.de/mdr/284311/1/mp3/high/stream.mp3</location>
+            <title>MDR Kultur Folk</title>
+            <image>http://static.radio.de/images/broadcasts/72/40/7324/2/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>55</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mdr-284330-0.cast.mdr.de/mdr/284330/0/mp3/high/stream.mp3</location>
+            <title>MDR Sputnik</title>
+            <image>http://static.radio.de/images/broadcasts/b2/9e/1731/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>56</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://ndr-ndr1wellenord-kiel.cast.addradio.de/ndr/ndr1wellenord/kiel/mp3/128/stream.mp3</location>
+            <title>NDR 1</title>
+            <image>http://static.radio.de/images/broadcasts/77/76/2346/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>57</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://ndr-ndr2-niedersachsen.cast.addradio.de/ndr/ndr2/niedersachsen/mp3/128/stream.mp3</location>
+            <title>NDR 2</title>
+            <image>http://static.radio.de/images/broadcasts/02/33/2262/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>58</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://ndr-ndr903-hamburg.cast.addradio.de/ndr/ndr903/hamburg/mp3/128/stream.mp3</location>
+            <title>NDR 903</title>
+            <image>http://static.radio.de/images/broadcasts/b2/39/2347/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>59</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://ndr-ndrblue-live.cast.addradio.de/ndr/ndrblue/live/mp3/128/stream.mp3</location>
+            <title>NDR Blue</title>
+            <image>http://static.radio.de/images/broadcasts/d3/d9/34383/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>60</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>		
+        <track>
+            <location>http://ndr-ndrinfo-niedersachsen.cast.addradio.de/ndr/ndrinfo/niedersachsen/mp3/128/stream.mp3</location>
+            <title>NDR Info</title>
+            <image>http://static.radio.de/images/broadcasts/d3/d9/34383/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>60</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://ndr-ndrkultur-live.cast.addradio.de/ndr/ndrkultur/live/mp3/128/stream.mp3</location>
+            <title>NDR Kultur</title>
+            <image>http://static.radio.de/images/broadcasts/0a/bd/2351/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>61</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://ndr-njoy-live.cast.addradio.de/ndr/njoy/live/mp3/128/stream.mp3</location>
+            <title>NDR N-Joy</title>
+            <image>http://static.radio.de/images/broadcasts/32/6a/2350/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>62</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://edge.live.mp3.mdn.newmedia.nacamar.net/ostseewellelive/livestream.mp3</location>
+            <title>Ostseewelle HIT-RADIO</title>
+            <image>http://static.radio.de/images/broadcasts/b3/f6/2409/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>63</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.radio7.de/stream1/livestream.mp3</location>
+            <title>Radio 7 Ulm</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/278_288x162_2017-05-02-17-02-12-96.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>64</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://rbb-radioberlin-live.cast.addradio.de/rbb/radioberlin/live/mp3/128/stream.mp3</location>
+            <title>Radio Berlin</title>
+            <image>http://static.radio.de/images/broadcasts/d6/28/2257/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>65</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://streams.radiobob.de/bob-live/mp3-128</location>
+            <title>RADIO BOB</title>
+            <image>http://static.radio.de/images/broadcasts/cf/8d/4917/2/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>66</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://rbb-radioeins-live.cast.addradio.de/rbb/radioeins/live/mp3/128/stream.mp3</location>
+            <title>Radio Eins</title>
+            <image>http://static.radio.de/images/broadcasts/bb/aa/2261/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>67</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>https://mp3.ffh.de/radioffh/hqlivestream.mp3</location>
+            <title>Radio FFH</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/1_288x162_2017-05-02-17-01-21-941.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>68</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>https://mp3.ffh.de/ffhchannels/hqacoustichits.mp3</location>
+            <title>Radio FFH Acoustic Hits</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/1458_288x162_2017-10-18-10-45-18-769.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>69</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>https://mp3.ffh.de/ffhchannels/hqsummerfeeling.mp3</location>
+            <title>Radio FFH Sommerfeeling</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/1461_288x162_2017-10-18-10-45-19-851.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>70</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.ffn.de/ffn/mp3-192</location>
+            <title>Radio FFN</title>
+            <image>http://static.radio.de/images/broadcasts/af/5a/1576/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>71</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.ffn.de/ffn-comedy/mp3-192</location>
+            <title>Radio FFN Comedy</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/27_288x162_2017-10-13-14-00-19-724.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>72</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.radiohamburg.de/rhh-live/mp3-128</location>
+            <title>Radio Hamburg</title>
+            <image>http://static.radio.de/images/broadcasts/0a/65/2371/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>73</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://streams.radiopsr.de/psr-live/mp3-128</location>
+            <title>RADIO PSR</title>
+            <image>http://static.radio.de/images/broadcasts/b1/66/2237/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>74</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.rockland-digital.de/rockland/mp3-128</location>
+            <title>Radio Rockland</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/89_288x162_2017-05-02-17-02-29-429.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>75</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://internetradio.salue.de:8000/top100.mp3</location>
+            <title>Radio Salü Kulthits</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/1231_288x162_2017-10-27-07-00-46-214.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>76</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://onair11.xdevel.com:10010/;</location>
+            <title>Radio Valore</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/1356_288x162_2017-08-30-13-45-34-401.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>77</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mms.hoerradar.de/wmw128k</location>
+            <title>Radio WMW</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/161_288x162_2017-05-02-17-03-09-723.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>78</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://streams.rsh.de/rsh-live/mp3-192</location>
+            <title>R.SH - Radio Schleswig-Holstein</title>
+            <image>http://static.radio.de/images/broadcasts/32/9e/2230/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>79</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3channels.webradio.antenne.de/rockantenne</location>
+            <title>ROCK ANTENNE</title>
+            <image>http://static.radio.de/images/broadcasts/31/87/9112/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>80</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://streams.rpr1.de/rpr-simulcast-128-mp3</location>
+            <title>RPR1.</title>
+            <image>http://static.radio.de/images/broadcasts/44/3d/2225/4/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>81</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://sr1m.akacast.akamaistream.net/7/725/142685/v1/gnl.akacast.akamaistream.net/sr1m</location>
+            <title>SR1</title>
+            <image>http://static.radio.de/images/broadcasts/fe/40/2277/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>82</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://sr2m.akacast.akamaistream.net/7/375/142686/v1/gnl.akacast.akamaistream.net/sr2m</location>
+            <title>SR 2</title>
+            <image>http://static.radio.de/images/broadcasts/95/9e/2401/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>83</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://sr3m.akacast.akamaistream.net/7/722/142687/v1/gnl.akacast.akamaistream.net/sr3m</location>
+            <title>SR 3</title>
+            <image>http://static.radio.de/images/broadcasts/cc/7e/2278/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>84</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.sunshine-live.de/live/mp3-128</location>
+            <title>Sunshine Live</title>
+            <image>http://static.radio.de/images/broadcasts/b6/e3/2241/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>85</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>https://swr-swr1-bw.sslcast.addradio.de/swr/swr1/bw/mp3/128/stream.mp3</location>
+            <title>SWR 1 BW</title>
+            <image>http://static.radio.de/images/broadcasts/07/41/2273/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>86</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>https://swr-swr2-live.sslcast.addradio.de/swr/swr2/live/mp3/256/stream.mp3</location>
+            <title>SWR 2</title>
+            <image>http://static.radio.de/images/broadcasts/cb/2c/2414/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>87</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>https://swr-swr3-live.sslcast.addradio.de/swr/swr3/live/mp3/64/stream.mp3</location>
+            <title>SWR 3</title>
+            <image>http://static.radio.de/images/broadcasts/cd/0c/2275/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>88</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>https://swr-swr4-bw.sslcast.addradio.de/swr/swr4/bw/mp3/128/stream.mp3</location>
+            <title>SWR 4 BW</title>
+            <image>http://static.radio.de/images/broadcasts/79/93/2420/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>89</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>https://swr-swraktuell-live.sslcast.addradio.de/swr/swraktuell/live/mp3/128/stream.mp3</location>
+            <title>SWR Aktuell</title>
+            <image>http://static.radio.de/images/broadcasts/af/5d/2423/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>90</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://tb.aacl.stream.tb-group.fm/</location>
+            <title>TechnoBase.FM</title>
+            <image>http://static.radio.de/images/broadcasts/c5/a4/1993/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>91</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://tuner.m1.fm/hits.mp3</location>
+            <title>The Hits</title>
+            <image>http://static.radio.de/images/broadcasts/83/22/39404/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>92</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://wdr-wdr2-rheinland.icecast.wdr.de/wdr/wdr2/rheinland/mp3/128/stream.mp3</location>
+            <title>WDR 2</title>
+            <image>http://static.radio.de/images/broadcasts/96/67/2279/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>93</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://wdr-wdr3-live.icecast.wdr.de/wdr/wdr3/live/mp3/128/stream.mp3</location>
+            <title>WDR 3</title>
+            <image>http://static.radio.de/images/broadcasts/e9/41/2460/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>94</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://wdr-wdr4-live.icecast.wdr.de/wdr/wdr4/live/mp3/128/stream.mp3</location>
+            <title>WDR 4</title>
+            <image>http://static.radio.de/images/broadcasts/dc/16/2280/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>95</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://wdr-wdr5-live.icecast.wdr.de/wdr/wdr5/live/mp3/128/stream.mp3</location>
+            <title>WDR 5</title>
+            <image>http://static.radio.de/images/broadcasts/cf/05/2461/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>96</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://hr-youfm-live.cast.addradio.de/hr/youfm/live/mp3/128/stream.mp3</location>
+            <title>You FM</title>
+            <image>http://static.radio.de/images/broadcasts/52/db/2061/2/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>97</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3stream7.apasf.apa.at:8000</location>
+            <title>Hitradio OE3</title>
+            <image>http://static.radio.de/images/broadcasts/47/5f/4511/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>98</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3stream3.apasf.apa.at/</location>
+            <title>Radio österreich 1</title>
+            <image>http://static.radio.de/images/broadcasts/c4/94/8950/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>99</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3stream1.apasf.apa.at/</location>
+            <title>Radio FM4</title>
+            <image>http://static.radio.de/images/broadcasts/22/0c/2703/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>100</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3burgenland.apasf.sf.apa.at</location>
+            <title>Radio Burgenland</title>
+            <image>http://static.radio.de/images/broadcasts/a3/fe/9807/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>101</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3kaernten.apasf.sf.apa.at</location>
+            <title>Radio Kärnten</title>
+            <image>http://static.radio.de/images/broadcasts/ec/cd/10047/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>102</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3noe.apasf.sf.apa.at</location>
+            <title>Radio Niederösterreich</title>
+            <image>http://static.radio.de/images/broadcasts/c9/1c/9838/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>103</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3ooe.apasf.sf.apa.at</location>
+            <title>Radio Oberösterreich</title>
+            <image>http://static.radio.de/images/broadcasts/c5/c5/9012/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>104</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3salzburg.apasf.sf.apa.at</location>
+            <title>Radio Salzburg</title>
+            <image>http://static.radio.de/images/broadcasts/4e/f2/9932/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>105</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3stmrk.apasf.sf.apa.at</location>
+            <title>Radio Steiermark</title>
+            <image>http://static.radio.de/images/broadcasts/97/e4/9502/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>106</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3tirol.apasf.sf.apa.at</location>
+            <title>Radio Tirol</title>
+            <image>http://static.radio.de/images/broadcasts/f5/b2/9808/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>107</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3vlbg.apasf.sf.apa.at</location>
+            <title>Radio Vorarlberg</title>
+            <image>http://static.radio.de/images/broadcasts/08/87/4446/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>108</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://mp3wien2.apasf.sf.apa.at</location>
+            <title>Radio Wien</title>
+            <image>http://static.radio.de/images/broadcasts/0b/40/9493/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>109</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>https://secureonair.krone.at/kronehit-ultra-hd.aac</location>
+            <title>Kronehit</title>
+            <image>http://static.radio.at/images/broadcasts/74/d9/4221/2/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>110</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://94.136.28.13:8015/heroldrelax</location>
+            <title>HEROLD relax Radio</title>
+            <image>http://static.radio.de/images/broadcasts/63/01/34760/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>111</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://194.232.200.164:8000/</location>
+            <title>Life Radio Tirol</title>
+            <image>http://static.radio.de/images/broadcasts/2c/6a/4965/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>112</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://live.gruen-weiss.at/rgw.mp3</location>
+            <title>Radio Grün-Weiss</title>
+            <image>http://static.radio.at/images/broadcasts/1f/08/12545/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>113</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://s9.pop-stream.de:9750/</location>
+            <title>Radio Welle Woertersee</title>
+            <image>http://static.radio.de/images/broadcasts/bf/65/9135/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>114</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://rs8.stream24.net/stream</location>
+            <title>Soundportal</title>
+            <image>http://static.radio.at/images/broadcasts/fd/95/4453/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>115</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://streamplus52.leonex.de:22810/</location>
+            <title>Stahlradio</title>
+            <image>http://static.radio.de/images/broadcasts/cf/3d/10416/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>116</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://88.99.122.236:8012/stream/1/</location>
+            <title>Tele Radio Vinschgau</title>
+            <image>http://static.radio.de/images/broadcasts/48/a7/4353/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>117</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.trap.fm:6004/</location>
+            <title>Trap.FM</title>
+            <image>http://static.radio.de/images/broadcasts/fc/0a/31969/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>118</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://live.welle1.at:8128/</location>
+            <title>Welle 1 Salzburg</title>
+            <image>http://static.radio.de/images/broadcasts/71/c1/9046/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>119</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.electroradio.fm/stream</location>
+            <title>Electro Radio</title>
+            <image>http://static.radio.at/images/broadcasts/4d/6e/1563/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>120</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream01.my105.ch/my105original.mp3</location>
+            <title>my105 Original</title>
+            <image>http://static.radio.at/images/broadcasts/c3/a5/36134/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>121</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://icecast.radio24.ch/radio24</location>
+            <title>Radio 24 102.8</title>
+            <image>http://static.radio.at/images/broadcasts/13/9c/5568/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>122</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream01.3fach.ch:8001/live</location>
+            <title>Radio 3FACH</title>
+            <image>http://is3.mzstatic.com/image/thumb/Purple117/v4/b0/98/88/b0988880-87dd-5847-3ab6-9ba24d96bb0c/source/175x175bb.jpg</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>123</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://streaming.swisstxt.ch/m/drs1/mp3_128</location>
+            <title>Radio SRF 1</title>
+            <image>http://static.radio.at/images/broadcasts/6c/53/4481/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>124</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://streaming.swisstxt.ch/m/drs2/mp3_128</location>
+            <title>Radio SRF 2</title>
+            <image>http://static.radio.at/images/broadcasts/5e/51/4499/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>125</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://streaming.swisstxt.ch/m/drs3/mp3_128</location>
+            <title>Radio SRF 3</title>
+            <image>http://static.radio.at/images/broadcasts/1a/15/4501/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>126</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://streaming.swisstxt.ch/m/drs4news/mp3_128</location>
+            <title>Radio SRF 4 News</title>
+            <image>http://static.radio.at/images/broadcasts/76/7b/4502/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>127</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.srg-ssr.ch/m/drsmw/mp3_128</location>
+            <title>Radio SRF Musikwelle</title>
+            <image>http://static.radio.at/images/broadcasts/14/9e/4505/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>128</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://streaming.swisstxt.ch/m/rsc_de/mp3_128</location>
+            <title>Radio Swiss Classic</title>
+            <image>http://static.radio.at/images/broadcasts/51/e6/3464/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>129</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.srg-ssr.ch/m/rsj/mp3_128</location>
+            <title>Radio Swiss Jazz</title>
+            <image>http://static.radio.at/images/broadcasts/c9/15/1904/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>130</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.srg-ssr.ch/m/rsp/mp3_128</location>
+            <title>Radio Swiss Pop</title>
+            <image>http://static.radio.at/images/broadcasts/73/c0/3463/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>131</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream1.impek.com:8100/stream/1/</location>
+            <title>SwissGroove</title>
+            <image>http://static.radio.at/images/broadcasts/9d/73/1988/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>132</vlc:id>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.104.6rtl.com/rtl-live/mp3-128</location>
+            <title>104.6 RTL</title>
+            <image>http://static.radio.de/images/broadcasts/17/ab/9013/2/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>133</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3</location>
+            <title>1Live</title>
+            <image>http://static.radio.de/images/broadcasts/4e/0d/1382/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>134</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.89.0rtl.de/live/mp3-256</location>
+            <title>89.0 RTL</title>
+            <image>http://static.radio.de/images/broadcasts/f0/16/1394/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>135</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://stream.absolutradio.de/relax/mp3-160</location>
+            <title>Absolut Relax</title>
+            <image>http://static.radio.de/images/broadcasts/28/5b/11593/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>136</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://alster-de-hz-fal-stream03-cluster01.radiohost.de:80/alsterradio_128</location>
+            <title>Alsterradio</title>
+            <image>http://static.radio.de/images/broadcasts/f5/16/2309/1/c175.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>137</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>
+        <track>
+            <location>http://alternativefm.cast.addradio.de/alternativefm/simulcast/high/stream.mp3</location>
+            <title>Alternativ FM</title>
+            <image>https://derpimagecache.s3.amazonaws.com/image/1352_288x162_2017-10-27-07-00-06-665.png</image>
+            <extension application="http://www.videolan.org/vlc/playlist/0">
+                <vlc:id>138</vlc:id>
+                <vlc:option>network-caching=500</vlc:option>
+            </extension>
+        </track>        
+    </trackList>
+    <extension application="http://www.videolan.org/vlc/playlist/0">
+        <vlc:item tid="0"/>
+        <vlc:item tid="1"/>
+        <vlc:item tid="2"/>
+        <vlc:item tid="3"/>
+        <vlc:item tid="4"/>
+        <vlc:item tid="5"/>
+        <vlc:item tid="6"/>
+        <vlc:item tid="7"/>
+        <vlc:item tid="8"/>
+        <vlc:item tid="9"/>
+        <vlc:item tid="10"/>
+        <vlc:item tid="11"/>
+        <vlc:item tid="12"/>
+        <vlc:item tid="13"/>
+        <vlc:item tid="14"/>
+        <vlc:item tid="15"/>
+        <vlc:item tid="16"/>
+        <vlc:item tid="17"/>
+        <vlc:item tid="18"/>
+        <vlc:item tid="19"/>
+        <vlc:item tid="20"/>
+        <vlc:item tid="21"/>
+        <vlc:item tid="22"/>
+        <vlc:item tid="23"/>
+        <vlc:item tid="24"/>
+        <vlc:item tid="25"/>
+        <vlc:item tid="26"/>
+        <vlc:item tid="27"/>
+        <vlc:item tid="28"/>
+        <vlc:item tid="29"/>
+        <vlc:item tid="30"/>
+        <vlc:item tid="31"/>
+        <vlc:item tid="32"/>
+        <vlc:item tid="33"/>
+        <vlc:item tid="34"/>
+        <vlc:item tid="35"/>
+        <vlc:item tid="36"/>
+        <vlc:item tid="37"/>
+        <vlc:item tid="38"/>
+        <vlc:item tid="39"/>
+        <vlc:item tid="40"/>
+        <vlc:item tid="41"/>
+        <vlc:item tid="42"/>
+        <vlc:item tid="43"/>
+        <vlc:item tid="44"/>
+        <vlc:item tid="45"/>
+        <vlc:item tid="46"/>
+        <vlc:item tid="47"/>
+        <vlc:item tid="48"/>
+        <vlc:item tid="49"/>
+        <vlc:item tid="50"/>
+        <vlc:item tid="51"/>
+        <vlc:item tid="52"/>
+        <vlc:item tid="53"/>
+        <vlc:item tid="54"/>
+        <vlc:item tid="55"/>
+        <vlc:item tid="56"/>
+        <vlc:item tid="57"/>
+        <vlc:item tid="58"/>
+        <vlc:item tid="59"/>
+        <vlc:item tid="60"/>
+        <vlc:item tid="61"/>
+        <vlc:item tid="62"/>
+        <vlc:item tid="63"/>
+        <vlc:item tid="64"/>
+        <vlc:item tid="65"/>
+        <vlc:item tid="66"/>
+        <vlc:item tid="67"/>
+        <vlc:item tid="68"/>
+        <vlc:item tid="69"/>
+        <vlc:item tid="70"/>
+        <vlc:item tid="71"/>
+        <vlc:item tid="72"/>
+        <vlc:item tid="73"/>
+        <vlc:item tid="74"/>
+        <vlc:item tid="75"/>
+        <vlc:item tid="76"/>
+        <vlc:item tid="77"/>
+        <vlc:item tid="78"/>
+        <vlc:item tid="79"/>
+        <vlc:item tid="80"/>
+        <vlc:item tid="81"/>
+        <vlc:item tid="82"/>
+        <vlc:item tid="83"/>
+        <vlc:item tid="84"/>
+        <vlc:item tid="85"/>
+        <vlc:item tid="86"/>
+        <vlc:item tid="87"/>
+        <vlc:item tid="88"/>
+        <vlc:item tid="89"/>
+        <vlc:item tid="90"/>
+        <vlc:item tid="91"/>
+        <vlc:item tid="92"/>
+        <vlc:item tid="93"/>
+        <vlc:item tid="94"/>
+        <vlc:item tid="95"/>
+        <vlc:item tid="96"/>
+        <vlc:item tid="97"/>
+        <vlc:item tid="98"/>
+        <vlc:item tid="99"/>
+        <vlc:item tid="100"/>
+        <vlc:item tid="101"/>
+        <vlc:item tid="102"/>
+        <vlc:item tid="103"/>
+        <vlc:item tid="104"/>
+        <vlc:item tid="105"/>
+        <vlc:item tid="106"/>
+        <vlc:item tid="107"/>
+        <vlc:item tid="108"/>
+        <vlc:item tid="109"/>
+        <vlc:item tid="110"/>
+        <vlc:item tid="111"/>
+        <vlc:item tid="112"/>
+        <vlc:item tid="113"/>
+        <vlc:item tid="114"/>
+        <vlc:item tid="115"/>
+        <vlc:item tid="116"/>
+        <vlc:item tid="117"/>
+        <vlc:item tid="118"/>
+        <vlc:item tid="119"/>
+        <vlc:item tid="120"/>
+        <vlc:item tid="121"/>
+        <vlc:item tid="122"/>
+        <vlc:item tid="123"/>
+        <vlc:item tid="124"/>
+        <vlc:item tid="125"/>
+        <vlc:item tid="126"/>
+        <vlc:item tid="127"/>
+        <vlc:item tid="128"/>
+        <vlc:item tid="129"/>
+        <vlc:item tid="130"/>
+        <vlc:item tid="131"/>
+        <vlc:item tid="132"/>
+        <vlc:item tid="133"/>
+        <vlc:item tid="134"/>    
+        <vlc:item tid="135"/>
+        <vlc:item tid="136"/>    
+        <vlc:item tid="137"/>
+        <vlc:item tid="138"/>    
+
+    </extension>
+</playlist>
