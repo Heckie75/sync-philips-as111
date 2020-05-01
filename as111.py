@@ -28,6 +28,7 @@ from bluetooth import *
 import datetime
 import json
 import sys
+from time import sleep
 
 
 
@@ -41,19 +42,19 @@ device = {
     "version" : "",
     "datetime" : "",
     "volume" : 0,
-    "capabilities" : {}
+    "capabilities" : []
 }
 
-capabilities = ["0-VOLUME", "1-DSC", "2-DBB", "3-TREBLE", "4-BASS", 
-                "5-FULL", "6-CHARGING", "7-BATTERY", "8-DATETIME", 
+capabilities = ["0-VOLUME", "1-DSC", "2-DBB", "3-TREBLE", "4-BASS",
+                "5-FULL", "6-CHARGING", "7-BATTERY", "8-DATETIME",
                 "9-EQ1", "10-EQ2", "11-EQ3", "12-EQ4", "13-EQ5",
-				"14-ALARM_VOLUME", "15-AC_DC_POWER_MODE", 
-                "16-REMOTE_CONTROL", "17-FM_STATION_SEARCH", 
-                "18-FM_FREQUENCY_TUNING", "19-FM_AUTO_PROGRAM", 
+                "14-ALARM_VOLUME", "15-AC_DC_POWER_MODE",
+                "16-REMOTE_CONTROL", "17-FM_STATION_SEARCH",
+                "18-FM_FREQUENCY_TUNING", "19-FM_AUTO_PROGRAM",
                 "20-FM_MANUAL_PROGRAM", "21-FM_PRESET_STATION",
-				"22-DOCK_ALARM_1", "23-DOCK_ALARM_2", 
+                "22-DOCK_ALARM_1", "23-DOCK_ALARM_2",
                 "24-DOCK_ALARM_LED", "25-AUDIO_SOURCE", "26-APPALM",
-				"27-RCAPPSC" ]
+                "27-RCAPPSC" ]
 
 
 
@@ -61,17 +62,30 @@ capabilities = ["0-VOLUME", "1-DSC", "2-DBB", "3-TREBLE", "4-BASS",
 def print_help():
 
     print("""
- USAGE:   as111.py <mac> [command]
+ USAGE:   as111.py <mac> [command1] [params] [command2] ...
  EXAMPLE: Set volume to 12
           $ ./as111.py vol 12
 
- vol <0-32>             Sets volume to value which is between 0 and 32
- mute                   Sets volume to 0
- alarm-led <off|on>    	Activates / deactivates alarm LED
- info                   Prints device info
- json                   Prints device info in JSON format
- debug                  Activates debug mode
- help                   Information about usage, commands and parameters
+          Hacks and command queueing
+          as111.py 00:1D:DF:52:F1:91 display 5 8765 countup 0:10 countdown 0:10 mins-n-secs 5
+
+ sync                    Synchronizes time between PC and dock
+ vol <0-32>              Sets volume to value which is between 0 and 32
+ mute                    Sets volume to 0
+ alarm-led <off|on>      Activates / deactivates alarm LED
+
+ Hacks:
+ mins-n-secs <secs>      Displays minutes and seconds instead of hour and minutes for <secs> seconds
+ countdown <mm:ss>       Starts countdown
+ countup <mm:ss>         Starts counting up
+ display <secs> <number> Displays any 4-digit <number> for <secs> seconds
+ sleep <n>               Hold processing for n seconds
+
+ Other:
+ info                    Prints device info
+ json                    Prints device info in JSON format
+ debug                   Activates debug mode
+ help                    Information about usage, commands and parameters
     """)
 
 
@@ -84,7 +98,7 @@ MAC:     %s
 Name:    %s
 Version: %s
 Time:    %s
-Volume:  %i  
+Volume:  %i
     """ % (device["mac"], device["name"], device["version"], device["datetime"], device["volume"]) )
 
 
@@ -92,7 +106,7 @@ Volume:  %i
 
 def print_json():
     print(json.dumps(device, indent=2))
-    
+
 
 
 
@@ -153,7 +167,7 @@ def send(data):
             print("DEBUG: <<< %s" % (" ".join(str(i) for i in raw)))
 
     except btcommon.BluetoothError as error:
-	    print("ERROR: request failed, %s" % error)
+        print("ERROR: request failed, %s" % error)
 
     return raw
 
@@ -246,11 +260,11 @@ def request_device_info():
     # request device capabilities
     if debug == 1:
         print("DEBUG: request device capabilities")
-        
+
     raw = send(_get_request(6))
     parse_capabilities(raw[8:-1])
     if debug == 1:
-        print("DEBUG: device capabilities requested")
+        print("DEBUG: device capabilities requested: %s" % ", ".join(device["capabilities"]))
 
 
 
@@ -291,12 +305,103 @@ def sync_time():
 
 
 
+def display_mins_n_secs(secs):
+
+    while (secs >=0):
+        ts = get_timestamp_as_array()
+        ts_string = "%02d%02d-%02d-%02d %02d:%02d:%02d" % (ts[0], ts[1],
+                                    ts[2] + 1, ts[3], ts[5], ts[6], ts[6])
+
+        ts[4] = ts[5]
+        ts[5] = ts[6]
+        ts[6] = 0
+
+        if debug == 1:
+            print("DEBUG: display minutes and seconds %s" % ts_string)
+
+        send(_get_request(17, [ 8 ] + ts))
+
+        device["datetime"] = ts_string
+
+        if debug == 1:
+            print("DEBUG: displayed minutes and seconds")
+
+        try:
+            sleep(1)
+            secs -= 1
+        except:
+            return
+
+
+
+
+def display_number(number):
+
+    ts = get_timestamp_as_array()
+
+    ts[4] = number // 100 % 100
+    ts[5] = number % 100
+    ts[6] = 0
+
+    ts_string = "%02d:%02d" % (ts[4], ts[5])
+
+    if debug == 1:
+        print("DEBUG: set display to %s" % ts_string)
+
+    send(_get_request(17, [ 8 ] + ts))
+
+    device["datetime"] = ts_string
+
+    if debug == 1:
+        print("DEBUG: display set")
+
+
+
+
+def countdown(minutes, seconds, step = -1):
+
+    ts = get_timestamp_as_array()
+
+    total = minutes * 60 + seconds
+    remain = total
+
+    while (remain >= 0):
+
+        if step == -1:
+            display = remain
+        else:
+            display = total - remain
+
+        ts[4] = display // 60
+        ts[5] = display % 60
+        ts[6] = 0
+
+        ts_string = "%02d:%02d" % (ts[4], ts[5])
+
+        if debug == 1:
+            print("DEBUG: set countdown to %s" % ts_string)
+
+        send(_get_request(17, [ 8 ] + ts))
+
+        device["datetime"] = ts_string
+
+        if debug == 1:
+            print("DEBUG: countdown set")
+        try:
+            sleep(1)
+            remain -= 1
+        except:
+            print("INFO: countdown interrupted")
+            return
+
+
+
 
 def set_volume(vol):
 
     if debug == 1:
         print("DEBUG: Set volume to %i" % vol)
-        
+
     raw = send(_get_request(17, [ 0, vol ]))
 
     if debug == 1:
@@ -330,7 +435,6 @@ if __name__ == "__main__":
     connect()
 
     request_device_info()
-    sync_time()
 
     # process optional commands
     args = sys.argv[1:]
@@ -355,6 +459,56 @@ if __name__ == "__main__":
             set_alarm_led(status)
             args = args[1:]
 
+        elif command == "sleep":
+            try:
+                secs = int(args[0])
+            except:
+                print("ERROR: seconds must be numeric")
+                exit(1)
+            try:
+                sleep(secs)
+            except:
+                pass
+            args = args[1:]
+
+        elif command == "sync":
+            sync_time()
+
+        elif command == "countdown" or command == "countup":
+            try:
+                param = args[0].split(":")
+                minutes = int(param[0])
+                secs = int(param[1])
+            except:
+                print("ERROR: time must be given in numeric format mm:ss")
+                exit(1)
+
+            countdown(minutes, secs, -1 if command == "countdown" else 1)
+            args = args[1:]
+
+        elif command == "mins-n-secs":
+            try:
+                secs = int(args[0]) % 59
+            except:
+                print("ERROR: seconds must be numeric")
+                exit(1)
+            display_mins_n_secs(secs)
+            args = args[1:]
+
+        elif command == "display":
+            try:
+                secs = int(args[0]) % 59
+                number = int(args[1])
+            except:
+                print("ERROR: seconds must be numeric")
+                exit(1)
+            display_number(number)
+            try:
+                sleep(secs)
+            except:
+                pass
+            args = args[2:]
+
         elif command == "info":
             print_info()
 
@@ -364,5 +518,6 @@ if __name__ == "__main__":
         elif command == "help":
             print_help()
 
+    sync_time()
     disconnect()
     exit(0)

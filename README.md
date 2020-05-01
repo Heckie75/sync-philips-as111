@@ -5,19 +5,32 @@ The Philips AS111/12 is a bluetooth speaker with clock and micro-usb port.
 
 Usage:
 ```
-$ ./as111.py
+$ as111.py
 
- USAGE:   as111.py <mac> [command]
+ USAGE:   as111.py <mac> [command1] [params] [command2] ...
  EXAMPLE: Set volume to 12
           $ ./as111.py vol 12
 
- vol <0-32>             Sets volume to value which is between 0 and 32
- mute                   Sets volume to 0
- alarm-led <off|on>     Activates / deactivates alarm LED
- info                   Prints device info
- json                   Prints device info in JSON format
- debug                  Activates debug mode
- help                   Information about usage, commands and parameters
+          Hacks and command queueing
+          as111.py 00:1D:DF:52:F1:91 display 5 8765 countup 0:10 countdown 0:10 mins-n-secs 5
+
+ sync                    Synchronizes time between PC and dock
+ vol <0-32>              Sets volume to value which is between 0 and 32
+ mute                    Sets volume to 0
+ alarm-led <off|on>      Activates / deactivates alarm LED
+
+ Hacks:
+ mins-n-secs <secs>      Displays minutes and seconds instead of hour and minutes for <secs> seconds
+ countdown <mm:ss>       Starts countdown
+ countup <mm:ss>         Starts counting up
+ display <secs> <number> Displays any 4-digit <number> for <secs> seconds
+ sleep <n>               Hold processing for n seconds
+
+ Other:
+ info                    Prints device info
+ json                    Prints device info in JSON format
+ debug                   Activates debug mode
+ help                    Information about usage, commands and parameters
 ```
 
 ## Pre-condition
