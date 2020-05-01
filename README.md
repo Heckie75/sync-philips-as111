@@ -1,26 +1,27 @@
-# sync-philips-as111
-Sync Linux desktop time with Philips A111/12 docking station
+# Philips AS111 Linux Control
+Script in order to control Philips A111/12 docking station
 
-The Philips AS111/12 is a bluetooth speaker with clock and micro-usb port. In addition to the bluetooth audio device you are able to sync the current time by using a bluetooth serial connection. 
-
-This is a little python script that is used in order to set the current time of the docking station called 'Philips AS111/12'.
+The Philips AS111/12 is a bluetooth speaker with clock and micro-usb port.
 
 Usage:
 ```
-USAGE: sync-philips_as111 <mac>
-```
+$ ./as111.py
 
-Example:
-```
-$ ./sync-philips_as111 00:1D:DF:51:53:2B
-Connect to 00:1D:DF:51:53:2B
-Set current time 2018-08-13 20:07:57
-Sync finished
+ USAGE:   as111.py <mac> [command]
+ EXAMPLE: Set volume to 12
+          $ ./as111.py vol 12
+
+ vol <0-32>             Sets volume to value which is between 0 and 32
+ mute                   Sets volume to 0
+ alarm-led <off|on>     Activates / deactivates alarm LED
+ info                   Prints device info
+ json                   Prints device info in JSON format
+ debug                  Activates debug mode
+ help                   Information about usage, commands and parameters
 ```
 
 ## Pre-condition
 Before you can use this script you must pair the device.
-
 
 **Note**
 On Ubuntu this script runs as expected after paring. But on Raspbian it was a hard to make it work since I've always got the error 'connection refused'.
@@ -31,24 +32,54 @@ sudo hciconfig hci0 sspmode 0
 
 For PIN use 0000.
 
-
 ## API
-In order to sync the time you need an RFCOMM connection. Port is 1. 
+You need to establish a RFCOMM connection via bluetooth. Port is 1. 
 
-The byte sequence that must be send looks as follows:
+All requests follow the same schema. 
+
 ```
-Example is for 2018-08-13 20:30:24
+153 <length> <sequence no> <command> <payload> ... <checksum>
+|   |        |             |         |             + see checksum
+|   |        |             |         + payload, that depends on command
+|   |        |             + Command, e.g. 17 in order to set time
+|   |        + sequence number which identifies this request
+|   + length of request incl. command, payload, checksum
++ static value, alwaws 153
+```
 
-\x99\x0B\x87\x11\x08\x14\x12\x08\x0D\x14\x1E\x18\x11
-|                    |   |   |   |   |   |   |   + static postamble
-|                    |   |   |   |   |   |   + Seconds in hex
-|                    |   |   |   |   |   + minutes in hex
-|                    |   |   |   |   + hour in hex
-|                    |   |   |   + day in hex
-|                    |   |   + ordinal of month, e.g. "08" for August
-|                    |   + last two digits of year in hex, here "12" for 2018
-|                    + first two digits of year in hex, here "14" for 2018
-+ static preamble        
+Responses follow the schema of requests.
+
+You should run the script by using the debug mode to see what is going over the air. 
+
+```
+DEBUG: Connnect to 00:1D:DF:52:F1:91
+DEBUG: Connnected to 00:1D:DF:52:F1:91
+DEBUG: request device name
+DEBUG: >>> 153 3 1 8 248
+DEBUG: <<< 153 8 1 9 65 83 49 49 49 207
+DEBUG: device name is "AS111"
+DEBUG: request device version
+DEBUG: >>> 153 3 2 19 237
+DEBUG: <<< 153 15 2 20 48 50 50 46 49 48 97 46 0 0 0 0 56
+DEBUG: device version is "022.10a."
+DEBUG: request current volume
+DEBUG: >>> 153 4 3 15 0 241
+DEBUG: <<< 153 5 3 16 0 12 225
+DEBUG: current volume is 12
+DEBUG: sync time to 2020-05-01 18:08:46
+DEBUG: >>> 153 11 4 17 8 20 20 4 1 18 8 46 114
+DEBUG: <<< 153 4 4 4 0 248
+DEBUG: time synced
+DEBUG: Set volume to 12
+DEBUG: >>> 153 5 5 17 0 12 227
+DEBUG: <<< 153 4 5 4 0 247
+DEBUG: volume set to 12
+DEBUG: Set volume to 12
+DEBUG: >>> 153 5 6 17 24 1 214
+DEBUG: <<< 153 4 6 4 0 246
+DEBUG: volume set to 12
+DEBUG: disconnect
+DEBUG: disconnected
 ```
 
 ## Setup with Raspberry Pi Zero
