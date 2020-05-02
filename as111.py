@@ -59,6 +59,12 @@ capabilities = ["0-VOLUME", "1-DSC", "2-DBB", "3-TREBLE", "4-BASS",
 
 
 
+def _log(s):
+    if debug == 1:
+        print(s)
+
+
+
 def print_help():
 
     print("""
@@ -70,7 +76,7 @@ def print_help():
           as111.py 00:1D:DF:52:F1:91 display 5 8765 countup 0:10 countdown 0:10 mins-n-secs 5
 
  sync                    Synchronizes time between PC and dock
- vol <0-32>              Sets volume to value which is between 0 and 32
+ vol [+-]<0-32>          Sets volume to value which is between 0 and 32
  mute                    Sets volume to 0
  alarm-led <off|on>      Activates / deactivates alarm LED
 
@@ -114,8 +120,7 @@ def connect():
 
     global socket
 
-    if debug == 1:
-        print("DEBUG: Connnect to %s" % device["mac"])
+    _log("DEBUG: Connnect to %s" % device["mac"])
 
     try:
         client_socket = BluetoothSocket( RFCOMM )
@@ -129,16 +134,14 @@ def connect():
 
     socket = client_socket
 
-    if debug == 1:
-        print("DEBUG: Connnected to %s" % device["mac"])
+    _log("DEBUG: Connnected to %s" % device["mac"])
 
 
 
 
 def disconnect():
 
-    if debug == 1:
-        print("DEBUG: disconnect")
+    _log("DEBUG: disconnect")
 
     try:
         socket.close()
@@ -146,8 +149,7 @@ def disconnect():
     except:
         pass
 
-    if debug == 1:
-        print("DEBUG: disconnected")
+    _log("DEBUG: disconnected")
 
 
 
@@ -156,15 +158,13 @@ def send(data):
 
     raw = []
 
-    if debug == 1:
-        print("DEBUG: >>> %s" % (" ".join(str(i) for i in data)))
+    _log("DEBUG: >>> %s" % (" ".join(str(i) for i in data)))
 
     try:
         socket.send(bytes(data))
         raw = list(socket.recv(255))
 
-        if debug == 1:
-            print("DEBUG: <<< %s" % (" ".join(str(i) for i in raw)))
+        _log("DEBUG: <<< %s" % (" ".join(str(i) for i in raw)))
 
     except btcommon.BluetoothError as error:
         print("ERROR: request failed, %s" % error)
@@ -225,46 +225,38 @@ def _list_to_string(l):
 def request_device_info():
 
     # request device name
-    if debug == 1:
-        print("DEBUG: request device name")
+    _log("DEBUG: request device name")
 
     request = _get_request(8)
     raw = send(request)
     device["name"] = _list_to_string(raw)[4:-1]
 
-    if debug == 1:
-        print("DEBUG: device name is \"%s\"" % device["name"])
+    _log("DEBUG: device name is \"%s\"" % device["name"])
 
     # request device version
-    if debug == 1:
-        print("DEBUG: request device version")
+    _log("DEBUG: request device version")
 
     request = _get_request(19)
     raw = send(request)
     device["version"] = _list_to_string(raw)[4:-1]
 
-    if debug == 1:
-        print("DEBUG: device version is \"%s\"" % device["version"])
+    _log("DEBUG: device version is \"%s\"" % device["version"])
 
     # request device volume
-    if debug == 1:
-        print("DEBUG: request current volume")
+    _log("DEBUG: request current volume")
 
     request = _get_request(15, [ 0 ])
     raw = send(request)
     device["volume"] = raw[-2]
 
-    if debug == 1:
-        print("DEBUG: current volume is %i" % device["volume"])
+    _log("DEBUG: current volume is %i" % device["volume"])
 
     # request device capabilities
-    if debug == 1:
-        print("DEBUG: request device capabilities")
+    _log("DEBUG: request device capabilities")
 
     raw = send(_get_request(6))
     parse_capabilities(raw[8:-1])
-    if debug == 1:
-        print("DEBUG: device capabilities requested: %s" % ", ".join(device["capabilities"]))
+    _log("DEBUG: device capabilities requested: %s" % ", ".join(device["capabilities"]))
 
 
 
@@ -293,15 +285,13 @@ def sync_time():
     ts_string = "%02d%02d-%02d-%02d %02d:%02d:%02d" % (ts[0], ts[1],
                                 ts[2] + 1, ts[3], ts[4], ts[5], ts[6])
 
-    if debug == 1:
-        print("DEBUG: sync time to %s" % ts_string)
+    _log("DEBUG: sync time to %s" % ts_string)
 
     send(_get_request(17, [ 8 ] + ts))
 
     device["datetime"] = ts_string
 
-    if debug == 1:
-        print("DEBUG: time synced")
+    _log("DEBUG: time synced")
 
 
 
@@ -316,15 +306,13 @@ def display_mins_n_secs(secs):
         ts[5] = ts[6]
         ts[6] = 0
 
-        if debug == 1:
-            print("DEBUG: display minutes and seconds %s" % ts_string)
+        _log("DEBUG: display minutes and seconds %s" % ts_string)
 
         send(_get_request(17, [ 8 ] + ts))
 
         device["datetime"] = ts_string
 
-        if debug == 1:
-            print("DEBUG: displayed minutes and seconds")
+        _log("DEBUG: displayed minutes and seconds")
 
         try:
             sleep(1)
@@ -345,20 +333,20 @@ def display_number(number):
 
     ts_string = "%02d:%02d" % (ts[4], ts[5])
 
-    if debug == 1:
-        print("DEBUG: set display to %s" % ts_string)
+    _log("DEBUG: set display to %s" % ts_string)
 
     send(_get_request(17, [ 8 ] + ts))
 
     device["datetime"] = ts_string
 
-    if debug == 1:
-        print("DEBUG: display set")
+    _log("DEBUG: display set")
 
 
 
 
 def countdown(minutes, seconds, step = -1):
+
+    step = 1 if step > 0 else -1
 
     ts = get_timestamp_as_array()
 
@@ -378,15 +366,13 @@ def countdown(minutes, seconds, step = -1):
 
         ts_string = "%02d:%02d" % (ts[4], ts[5])
 
-        if debug == 1:
-            print("DEBUG: set countdown to %s" % ts_string)
+        _log("DEBUG: set countdown to %s" % ts_string)
 
         send(_get_request(17, [ 8 ] + ts))
 
         device["datetime"] = ts_string
 
-        if debug == 1:
-            print("DEBUG: countdown set")
+        _log("DEBUG: countdown set")
         try:
             sleep(1)
             remain -= 1
@@ -399,26 +385,27 @@ def countdown(minutes, seconds, step = -1):
 
 def set_volume(vol):
 
-    if debug == 1:
-        print("DEBUG: Set volume to %i" % vol)
+    vol = vol if vol <= 32 else 32
+    vol = vol if vol >= 0 else 0
+
+    _log("DEBUG: Set volume to %i" % vol)
 
     raw = send(_get_request(17, [ 0, vol ]))
 
-    if debug == 1:
-        print("DEBUG: volume set to %i" % vol)
+    _log("DEBUG: volume set to %i" % vol)
 
 
 
 
 def set_alarm_led(status):
 
-    if debug == 1:
-        print("DEBUG: Set volume to %i" % vol)
+    status = status if status == 1 else 0
+
+    _log("DEBUG: Set volume to %i" % vol)
 
     raw = send(_get_request(17, [ 24, status ]))
 
-    if debug == 1:
-        print("DEBUG: volume set to %i" % vol)
+    _log("DEBUG: volume set to %i" % vol)
 
 
 
@@ -436,45 +423,59 @@ if __name__ == "__main__":
 
     request_device_info()
 
-    # process optional commands
+    # process commands
     args = sys.argv[1:]
     while(len(args) > 0):
         command = args[0]
         args = args[1:]
 
         if command == "vol":
+
             try:
-                vol = int(args[0]) % 32
+                if args[0][0] in "-+":
+                    vol = device["volume"] + int(args[0])
+                else:
+                    vol = int(args[0])
+
+                set_volume(vol)
+
             except:
                 print("ERROR: Volume must be between 0 and 32")
                 exit(1)
-            set_volume(vol)
+
             args = args[1:]
 
         elif command == "mute":
+
             set_volume(0)
 
         elif command == "alarm-led":
+
             status = 1 if args[0] == "on" else 0
             set_alarm_led(status)
             args = args[1:]
 
         elif command == "sleep":
+
             try:
                 secs = int(args[0])
             except:
                 print("ERROR: seconds must be numeric")
                 exit(1)
+
             try:
                 sleep(secs)
             except:
                 pass
+
             args = args[1:]
 
         elif command == "sync":
+
             sync_time()
 
         elif command == "countdown" or command == "countup":
+
             try:
                 param = args[0].split(":")
                 minutes = int(param[0])
@@ -487,8 +488,9 @@ if __name__ == "__main__":
             args = args[1:]
 
         elif command == "mins-n-secs":
+
             try:
-                secs = int(args[0]) % 59
+                secs = int(args[0])
             except:
                 print("ERROR: seconds must be numeric")
                 exit(1)
@@ -496,13 +498,16 @@ if __name__ == "__main__":
             args = args[1:]
 
         elif command == "display":
+
             try:
-                secs = int(args[0]) % 59
+                secs = int(args[0]) % 60
                 number = int(args[1])
             except:
                 print("ERROR: seconds must be numeric")
                 exit(1)
+
             display_number(number)
+
             try:
                 sleep(secs)
             except:
@@ -510,12 +515,15 @@ if __name__ == "__main__":
             args = args[2:]
 
         elif command == "info":
+
             print_info()
 
         elif command == "json":
+
             print_json()
 
         elif command == "help":
+
             print_help()
 
     sync_time()
