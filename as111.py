@@ -31,9 +31,15 @@ import sys
 from time import sleep
 
 
+DEBUG = 3
+INFO = 2
+WARN = 1
+ERROR = 0
 
+LEVELS = ["ERROR", "WARN", "INFO", "DEBUG"]
 
-debug = 0
+loglevel = 0
+verbose = 0
 socket = None
 sequence = 0
 device = {
@@ -59,9 +65,10 @@ capabilities = ["0-VOLUME", "1-DSC", "2-DBB", "3-TREBLE", "4-BASS",
 
 
 
-def _log(s):
-    if debug == 1:
-        print(s)
+def _log(msg, level = INFO):
+    if loglevel >= level:
+        print("%s:\t%s" % (LEVELS[level], msg))
+
 
 
 
@@ -90,7 +97,8 @@ def print_help():
  Other:
  info                    Prints device info
  json                    Prints device info in JSON format
- debug                   Activates debug mode
+ verbose                 Verbose mode
+ debug                   Debug mode
  help                    Information about usage, commands and parameters
     """)
 
@@ -120,7 +128,7 @@ def connect():
 
     global socket
 
-    _log("DEBUG: Connnect to %s" % device["mac"])
+    _log("Connnect to %s" % device["mac"], DEBUG)
 
     try:
         client_socket = BluetoothSocket( RFCOMM )
@@ -128,20 +136,20 @@ def connect():
         client_socket.settimeout(2)
 
     except btcommon.BluetoothError as error:
-        print("ERROR: %s" % error)
-        print("ERROR: Connection failed! Check mac address and device.\n")
+        _log(error, ERROR)
+        _log("Connection failed! Check mac address and device.\n", ERROR)
         exit(1)
 
     socket = client_socket
 
-    _log("DEBUG: Connnected to %s" % device["mac"])
+    _log("Connnected to %s" % device["mac"], DEBUG)
 
 
 
 
 def disconnect():
 
-    _log("DEBUG: disconnect")
+    _log("disconnect", DEBUG)
 
     try:
         socket.close()
@@ -149,7 +157,7 @@ def disconnect():
     except:
         pass
 
-    _log("DEBUG: disconnected")
+    _log("disconnected", DEBUG)
 
 
 
@@ -158,16 +166,16 @@ def send(data):
 
     raw = []
 
-    _log("DEBUG: >>> %s" % (" ".join(str(i) for i in data)))
+    _log(">>> %s" % (" ".join(str(i) for i in data)), DEBUG)
 
     try:
         socket.send(bytes(data))
         raw = list(socket.recv(255))
 
-        _log("DEBUG: <<< %s" % (" ".join(str(i) for i in raw)))
+        _log("<<< %s" % (" ".join(str(i) for i in raw)), DEBUG)
 
     except btcommon.BluetoothError as error:
-        print("ERROR: request failed, %s" % error)
+        _log("request failed, %s" % error, ERROR)
 
     return raw
 
@@ -180,6 +188,7 @@ def _get_request(command, payload = []):
 
     length = 3 + len(payload)
     sequence += 1
+    sequence &= 255
     request = [ 153, length, sequence, command ]
 
     checksum = command
@@ -225,38 +234,38 @@ def _list_to_string(l):
 def request_device_info():
 
     # request device name
-    _log("DEBUG: request device name")
+    _log("request device name", DEBUG)
 
     request = _get_request(8)
     raw = send(request)
     device["name"] = _list_to_string(raw)[4:-1]
 
-    _log("DEBUG: device name is \"%s\"" % device["name"])
+    _log("device name is \"%s\"" % device["name"], INFO)
 
     # request device version
-    _log("DEBUG: request device version")
+    _log("request device version", DEBUG)
 
     request = _get_request(19)
     raw = send(request)
     device["version"] = _list_to_string(raw)[4:-1]
 
-    _log("DEBUG: device version is \"%s\"" % device["version"])
+    _log("device version is \"%s\"" % device["version"], INFO)
 
     # request device volume
-    _log("DEBUG: request current volume")
+    _log("request current volume", DEBUG)
 
     request = _get_request(15, [ 0 ])
     raw = send(request)
     device["volume"] = raw[-2]
 
-    _log("DEBUG: current volume is %i" % device["volume"])
+    _log("current volume is %i" % device["volume"], INFO)
 
     # request device capabilities
-    _log("DEBUG: request device capabilities")
+    _log("request device capabilities", DEBUG)
 
     raw = send(_get_request(6))
     parse_capabilities(raw[8:-1])
-    _log("DEBUG: device capabilities requested: %s" % ", ".join(device["capabilities"]))
+    _log("device capabilities requested: %s" % ", ".join(device["capabilities"]), DEBUG)
 
 
 
@@ -285,13 +294,13 @@ def sync_time():
     ts_string = "%02d%02d-%02d-%02d %02d:%02d:%02d" % (ts[0], ts[1],
                                 ts[2] + 1, ts[3], ts[4], ts[5], ts[6])
 
-    _log("DEBUG: sync time to %s" % ts_string)
+    _log("sync time to %s" % ts_string, INFO)
 
     send(_get_request(17, [ 8 ] + ts))
 
     device["datetime"] = ts_string
 
-    _log("DEBUG: time synced")
+    _log("time synced", DEBUG)
 
 
 
@@ -306,24 +315,25 @@ def display_mins_n_secs(secs):
         ts[5] = ts[6]
         ts[6] = 0
 
-        _log("DEBUG: display minutes and seconds %s" % ts_string)
+        _log("display minutes and seconds %s" % ts_string, INFO)
 
         send(_get_request(17, [ 8 ] + ts))
 
         device["datetime"] = ts_string
 
-        _log("DEBUG: displayed minutes and seconds")
+        _log("displayed minutes and seconds", DEBUG)
 
         try:
             sleep(1)
             secs -= 1
         except:
+            _log("displaying minutes and seconds interrupted", WARN)
             return
 
 
 
 
-def display_number(number):
+def display_number(secs, number):
 
     ts = get_timestamp_as_array()
 
@@ -333,13 +343,18 @@ def display_number(number):
 
     ts_string = "%02d:%02d" % (ts[4], ts[5])
 
-    _log("DEBUG: set display to %s" % ts_string)
+    _log("set display to %s" % ts_string, INFO)
 
     send(_get_request(17, [ 8 ] + ts))
 
     device["datetime"] = ts_string
 
-    _log("DEBUG: display set")
+    _log("display set", DEBUG)
+
+    try:
+        sleep(secs)
+    except:
+        _log("displaying number interrupted", WARN)
 
 
 
@@ -366,18 +381,18 @@ def countdown(minutes, seconds, step = -1):
 
         ts_string = "%02d:%02d" % (ts[4], ts[5])
 
-        _log("DEBUG: set countdown to %s" % ts_string)
+        _log("set countdown to %s" % ts_string, INFO)
 
         send(_get_request(17, [ 8 ] + ts))
 
         device["datetime"] = ts_string
 
-        _log("DEBUG: countdown set")
+        _log("countdown set", DEBUG)
         try:
             sleep(1)
             remain -= 1
         except:
-            print("INFO: countdown interrupted")
+            _log("counting interrupted", WARN)
             return
 
 
@@ -388,11 +403,11 @@ def set_volume(vol):
     vol = vol if vol <= 32 else 32
     vol = vol if vol >= 0 else 0
 
-    _log("DEBUG: Set volume to %i" % vol)
+    _log("Set volume to %i" % vol, INFO)
 
     raw = send(_get_request(17, [ 0, vol ]))
 
-    _log("DEBUG: volume set to %i" % vol)
+    _log("volume set to %i" % vol, DEBUG)
 
 
 
@@ -401,11 +416,11 @@ def set_alarm_led(status):
 
     status = status if status == 1 else 0
 
-    _log("DEBUG: Set volume to %i" % vol)
+    _log("Set alarm led to %i" % status, INFO)
 
     raw = send(_get_request(17, [ 24, status ]))
 
-    _log("DEBUG: volume set to %i" % vol)
+    _log("alarm led set to %i" % status, DEBUG)
 
 
 
@@ -416,7 +431,7 @@ if __name__ == "__main__":
         exit(1)
 
     if len(sys.argv) > 2 and sys.argv[2] == "debug":
-        debug = 1
+        loglevel = DEBUG
 
     device["mac"] = sys.argv[1]
     connect()
@@ -440,7 +455,7 @@ if __name__ == "__main__":
                 set_volume(vol)
 
             except:
-                print("ERROR: Volume must be between 0 and 32")
+                _log("Volume must be between 0 and 32", ERROR)
                 exit(1)
 
             args = args[1:]
@@ -460,13 +475,13 @@ if __name__ == "__main__":
             try:
                 secs = int(args[0])
             except:
-                print("ERROR: seconds must be numeric")
+                _log("seconds must be numeric", ERROR)
                 exit(1)
 
             try:
                 sleep(secs)
             except:
-                pass
+                _log("sleeping interrupted", WARN)
 
             args = args[1:]
 
@@ -481,7 +496,7 @@ if __name__ == "__main__":
                 minutes = int(param[0])
                 secs = int(param[1])
             except:
-                print("ERROR: time must be given in numeric format mm:ss")
+                _log("time must be given in numeric format mm:ss", ERROR)
                 exit(1)
 
             countdown(minutes, secs, -1 if command == "countdown" else 1)
@@ -492,7 +507,7 @@ if __name__ == "__main__":
             try:
                 secs = int(args[0])
             except:
-                print("ERROR: seconds must be numeric")
+                _log("seconds must be numeric", ERROR)
                 exit(1)
             display_mins_n_secs(secs)
             args = args[1:]
@@ -503,15 +518,10 @@ if __name__ == "__main__":
                 secs = int(args[0]) % 60
                 number = int(args[1])
             except:
-                print("ERROR: seconds must be numeric")
+                _log("seconds must be numeric", ERROR)
                 exit(1)
 
-            display_number(number)
-
-            try:
-                sleep(secs)
-            except:
-                pass
+            display_number(secs, number)
             args = args[2:]
 
         elif command == "info":
@@ -521,6 +531,14 @@ if __name__ == "__main__":
         elif command == "json":
 
             print_json()
+
+        elif command == "debug":
+
+            loglevel = DEBUG
+
+        elif command == "verbose":
+
+            loglevel = INFO
 
         elif command == "help":
 
