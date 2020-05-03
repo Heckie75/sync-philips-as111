@@ -7,7 +7,7 @@ Usage:
 ```
 $ as111.py
 
- USAGE:   as111.py <mac|alias|-|docks> [command1] [params] [command2] ...
+ USAGE:   as111.py <mac|alias|-|docks|stop> [command1] [params] [command2] ...
  EXAMPLE: Set volume to 12
           $ ./as111.py vol 12
 
@@ -16,6 +16,7 @@ $ as111.py
 
  <mac|alias|-|docks>     Use specific mac, alias or "-" for current connected dock
                          "docks" lists all paired docking stations
+                         "stop" sends a signal in order to terminate a running as111 process
  sync                    Synchronizes time between PC and dock
  vol [+-]<0-32>          Sets volume to value which is between 0 and 32
  mute                    Sets volume to 0

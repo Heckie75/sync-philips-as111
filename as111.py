@@ -35,6 +35,8 @@ from time import sleep
 
 MAC_PATTERN    = "00:1D:DF:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}"
 
+STOP_SIGNAL_FILE = "/tmp/.as111_stop"
+
 DEBUG = 3
 INFO = 2
 WARN = 1
@@ -187,7 +189,7 @@ Controller: %s
 def print_help():
 
     print("""
- USAGE:   as111.py <mac|alias|-|docks> [command1] [params] [command2] ...
+ USAGE:   as111.py <mac|alias|-|docks|stop> [command1] [params] [command2] ...
  EXAMPLE: Set volume to 12
           $ ./as111.py vol 12
 
@@ -196,6 +198,7 @@ def print_help():
 
  <mac|alias|-|docks>     Use specific mac, alias or "-" for current connected dock
                          "docks" lists all paired docking stations
+                         "stop" sends a signal in order to terminate a running as111 process
  sync                    Synchronizes time between PC and dock
  vol [+-]<0-32>          Sets volume to value which is between 0 and 32
  mute                    Sets volume to 0
@@ -294,6 +297,27 @@ def send(data):
         _log("request failed, %s" % error, ERROR)
 
     return raw
+
+
+
+
+def set_stop_signal():
+
+    open(STOP_SIGNAL_FILE, "w").close()
+
+
+
+def clean_stop_signal():
+
+    if is_stop_signal():
+        os.remove(STOP_SIGNAL_FILE)
+
+
+
+
+def is_stop_signal():
+
+    return os.path.isfile(STOP_SIGNAL_FILE)
 
 
 
@@ -422,7 +446,7 @@ def sync_time():
 
 def display_mins_n_secs(secs):
 
-    while (secs >=0):
+    while (secs >=0 and not is_stop_signal()):
         ts = get_timestamp_as_array()
         ts_string = "%02d%02d-%02d-%02d %02d:%02d:%02d" % (ts[0], ts[1],
                                     ts[2] + 1, ts[3], ts[5], ts[6], ts[6])
@@ -511,7 +535,7 @@ def countdown(minutes, seconds, step = -1):
     total = minutes * 60 + seconds
     remain = total
 
-    while (remain >= 0):
+    while (remain >= 0 and not is_stop_signal()):
 
         if step == -1:
             display = remain
@@ -577,7 +601,13 @@ if __name__ == "__main__":
 
         loglevel = DEBUG if sys.argv[2] == "debug" else INFO
 
-    if sys.argv[1] == "docks":
+    if sys.argv[1] == "stop":
+
+        _log("Set stop signal", INFO)
+        set_stop_signal()
+        exit(0)
+
+    elif sys.argv[1] == "docks":
 
         print_docks()
         exit(0)
@@ -590,6 +620,7 @@ if __name__ == "__main__":
             exit(1)
 
         device["mac"], device["alias"] = _read_aliases(_device["mac"])
+        _log("use %s, %s" % (device["mac"], device["alias"]), INFO)
 
     else:
 
@@ -600,6 +631,7 @@ if __name__ == "__main__":
         elif device["alias"] != "":
             _log("Found alias \"%s\"" % device["alias"], INFO)
 
+    clean_stop_signal()
     connect()
 
     request_device_info()
@@ -716,4 +748,5 @@ if __name__ == "__main__":
 
     sync_time()
     disconnect()
+    clean_stop_signal()
     exit(0)
