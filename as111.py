@@ -24,11 +24,13 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-from bluetooth import *
+import bluetooth
 import datetime
 import json
 import re
+import subprocess
 import sys
+import os
 from time import sleep
 
 MAC_PATTERN    = "00:1D:DF:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}"
@@ -44,6 +46,7 @@ loglevel = 0
 verbose = 0
 socket = None
 sequence = 0
+devices = []
 device = {
     "mac" : "",
     "alias" : "",
@@ -102,16 +105,97 @@ def _read_aliases(target):
 
 
 
+def _exec_bluetoothctl( commands = [] ):
+
+    command_str = "\n".join(commands)
+
+    p1 = subprocess.Popen([ "echo", "-e", "%s\nquit\n\n" % command_str ],
+                            stdout=subprocess.PIPE)
+    p2 = subprocess.Popen([ "bluetoothctl" ],
+                            stdin=p1.stdout,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
+    p1.stdout.close()
+    out, err = p2.communicate()
+    return out.decode("utf8")
+
+
+def _get_devices():
+
+    global devices
+
+    output = _exec_bluetoothctl()
+
+    controllers = []
+    for match in re.finditer("Controller ([0-9A-F:]+) (.+)", output):
+        controllers += [ match.group(1) ]
+
+    _devices = []
+    for controller in controllers:
+        output = _exec_bluetoothctl( [ "select %s" % controller, "devices" ] )
+        for match in re.finditer("Device (%s) (.+)" % MAC_PATTERN, output):
+            _devices += [
+                {
+                    "controller" : controller,
+                    "mac" : match.group(1),
+                    "name" : match.group(2),
+                    "connected" : None
+                }
+            ]
+
+    for _device in _devices:
+        output = _exec_bluetoothctl( [ "select %s" % _device["controller"], "info %s" % _device["mac"]] )
+        for match in re.finditer("Connected: (yes|no)", output):
+            _device["connected"] = True if match.group(1) == "yes" else False
+
+    devices = _devices
+
+    return _devices
+
+
+
+
+def _get_connected_device():
+
+    _devices = _get_devices()
+    for _device in _devices:
+        if _device["connected"] == True:
+            return _device
+
+    return None
+
+
+
+
+def print_docks():
+
+    _devices = _get_devices()
+    for _device in _devices:
+        _mac, _alias = _read_aliases(_device["mac"])
+
+        print("""\
+MAC:        %s
+Name:       %s
+Alias:      %s
+Connected:  %s
+Controller: %s
+""" % (_device["mac"], _device["name"], _alias if _alias != None else "", "yes" if _device["connected"] == True else "no", _device["controller"]) )
+
+
+
+
 def print_help():
 
     print("""
- USAGE:   as111.py <mac> [command1] [params] [command2] ...
+ USAGE:   as111.py <mac|alias|-|docks> [command1] [params] [command2] ...
  EXAMPLE: Set volume to 12
           $ ./as111.py vol 12
 
           Hacks and command queueing
           as111.py 00:1D:DF:52:F1:91 display 5 8765 countup 0:10 countdown 0:10 mins-n-secs 5
 
+ <mac|alias|-|docks>     Use specific mac, alias or "-" for current connected dock
+                         "docks" lists all paired docking stations
  sync                    Synchronizes time between PC and dock
  vol [+-]<0-32>          Sets volume to value which is between 0 and 32
  mute                    Sets volume to 0
@@ -163,11 +247,11 @@ def connect():
     _log("Connnect to %s" % device["mac"], DEBUG)
 
     try:
-        client_socket = BluetoothSocket( RFCOMM )
+        client_socket = bluetooth.BluetoothSocket( bluetooth.RFCOMM )
         client_socket.connect((device["mac"], 1))
         client_socket.settimeout(2)
 
-    except btcommon.BluetoothError as error:
+    except bluetooth.btcommon.BluetoothError as error:
         _log(error, ERROR)
         _log("Connection failed! Check mac address and device.\n", ERROR)
         exit(1)
@@ -206,7 +290,7 @@ def send(data):
 
         _log("<<< %s" % (" ".join(str(i) for i in raw)), DEBUG)
 
-    except btcommon.BluetoothError as error:
+    except bluetooth.btcommon.BluetoothError as error:
         _log("request failed, %s" % error, ERROR)
 
     return raw
@@ -490,14 +574,31 @@ if __name__ == "__main__":
         exit(1)
 
     if len(sys.argv) > 2 and sys.argv[2] in ["debug", "verbose"]:
+
         loglevel = DEBUG if sys.argv[2] == "debug" else INFO
 
-    device["mac"], device["alias"] = _read_aliases(sys.argv[1])
-    if device["mac"] == None:
-        _log("Unable to resolve mac for alias. Check .known_as111 file.", ERROR)
-        exit(1)
-    elif device["alias"] != "":
-        _log("Found alias \"%s\"" % device["alias"], INFO)
+    if sys.argv[1] == "docks":
+
+        print_docks()
+        exit(0)
+
+    elif sys.argv[1] == "-":
+
+        _device = _get_connected_device()
+        if _device == None:
+            _log("No device connected.", ERROR)
+            exit(1)
+
+        device["mac"], device["alias"] = _read_aliases(_device["mac"])
+
+    else:
+
+        device["mac"], device["alias"] = _read_aliases(sys.argv[1])
+        if device["mac"] == None:
+            _log("Unable to resolve mac for alias. Check .known_as111 file.", ERROR)
+            exit(1)
+        elif device["alias"] != "":
+            _log("Found alias \"%s\"" % device["alias"], INFO)
 
     connect()
 
