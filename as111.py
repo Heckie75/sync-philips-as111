@@ -119,6 +119,7 @@ def print_help():
 
  Hacks:
  mins-n-secs <secs>      Displays minutes and seconds instead of hour and minutes for <secs> seconds
+ date                    Displays date
  countdown <mm:ss>       Starts countdown
  countup <mm:ss>         Starts counting up
  display <secs> <number> Displays any 4-digit <number> for <secs> seconds
@@ -364,6 +365,33 @@ def display_mins_n_secs(secs):
 
 
 
+def display_date():
+
+    ts = get_timestamp_as_array()
+    ts_string = "%02d%02d-%02d-%02d %02d:%02d:%02d" % (ts[0], ts[1],
+                                ts[2] + 1, ts[3], ts[5], ts[6], ts[6])
+
+    ts[4] = ts[3]
+    ts[5] = ts[2] + 1
+    ts[6] = 0
+
+    _log("display date %s" % ts_string, INFO)
+
+    send(_get_request(17, [ 8 ] + ts))
+
+    device["datetime"] = ts_string
+
+    _log("displayed date", DEBUG)
+
+    try:
+        sleep(1)
+    except:
+        _log("displaying minutes and seconds interrupted", WARN)
+        return
+
+
+
+
 def display_number(secs, number):
 
     ts = get_timestamp_as_array()
@@ -548,6 +576,10 @@ if __name__ == "__main__":
                 exit(1)
             display_mins_n_secs(secs)
             args = args[1:]
+
+        elif command == "date":
+
+            display_date()
 
         elif command == "display":
 

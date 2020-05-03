@@ -15,21 +15,23 @@ $ as111.py
           as111.py 00:1D:DF:52:F1:91 display 5 8765 countup 0:10 countdown 0:10 mins-n-secs 5
 
  sync                    Synchronizes time between PC and dock
- vol <0-32>              Sets volume to value which is between 0 and 32
+ vol [+-]<0-32>          Sets volume to value which is between 0 and 32
  mute                    Sets volume to 0
  alarm-led <off|on>      Activates / deactivates alarm LED
 
  Hacks:
  mins-n-secs <secs>      Displays minutes and seconds instead of hour and minutes for <secs> seconds
+ date                    Displays date
  countdown <mm:ss>       Starts countdown
  countup <mm:ss>         Starts counting up
- display <number>        Displays any 4-digit <number>
+ display <secs> <number> Displays any 4-digit <number> for <secs> seconds
  sleep <n>               Hold processing for n seconds
 
  Other:
  info                    Prints device info
  json                    Prints device info in JSON format
- debug                   Activates debug mode
+ verbose                 Verbose mode
+ debug                   Debug mode
  help                    Information about usage, commands and parameters
 ```
 
@@ -47,7 +49,7 @@ For PIN use 0000.
 
 
 ## Aliases
-For convenience reasons I recommend to use aliases. Instead of entering the mac address and pin each time you want to run the script, you can call the script by using meaningful names. 
+For convenience reasons I recommend to use aliases. Instead of entering the mac address and pin each time you want to run the script, you can call the script by using meaningful names.
 
 The script tries to read a file called `.known_as111` which must be located in your home folder. It is a text file with three columns:
 1. MAC address
@@ -65,7 +67,7 @@ This enables you to call the script like this
 $ as111.py W vol 10
 ```
 
-instead of 
+instead of
 ```
 $ as111.py 00:1D:DF:52:F1:91 vol 10
 ```
@@ -73,9 +75,9 @@ $ as111.py 00:1D:DF:52:F1:91 vol 10
 
 
 ## API
-You need to establish a RFCOMM connection via bluetooth. Port is 1. 
+You need to establish a RFCOMM connection via bluetooth. Port is 1.
 
-All requests follow the same schema. 
+All requests follow the same schema.
 
 ```
 153 <length> <sequence no> <command> <payload> ... <checksum>
@@ -89,7 +91,7 @@ All requests follow the same schema.
 
 Responses follow the schema of requests.
 
-You should run the script by using the debug mode to see what is going over the air. 
+You should run the script by using the debug mode to see what is going over the air.
 
 ```
 DEBUG: Connnect to 00:1D:DF:52:F1:91
@@ -129,13 +131,13 @@ There are two additional scripts so that the Philips AS111/12 turns into a inter
 
 ### omxplay
 
-```omxplay``` is a little script that plays radio stations given in an xspf file, e.g. 
+```omxplay``` is a little script that plays radio stations given in an xspf file, e.g.
 
 ```
 ./omxplay Internetradio.xspf 917xfm
 ```
 
-Plays the Hamburg music radio station 917xfm. Its URL is taken from *xspf playlist*. 
+Plays the Hamburg music radio station 917xfm. Its URL is taken from *xspf playlist*.
 
 You can list all stations of *xspf playlist* as follows
 ```
