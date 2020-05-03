@@ -45,6 +45,32 @@ sudo hciconfig hci0 sspmode 0
 
 For PIN use 0000.
 
+
+## Aliases
+For convenience reasons I recommend to use aliases. Instead of entering the mac address and pin each time you want to run the script, you can call the script by using meaningful names. 
+
+The script tries to read a file called `.known_as111` which must be located in your home folder. It is a text file with three columns:
+1. MAC address
+2. Meaningful name
+
+My `.known_as111` looks as follows:
+```
+$ cat ~/.known_as111
+00:1D:DF:51:53:2B Küche
+00:1D:DF:52:F1:91 Wohnzimmer
+```
+
+This enables you to call the script like this
+```
+$ as111.py W vol 10
+```
+
+instead of 
+```
+$ as111.py 00:1D:DF:52:F1:91 vol 10
+
+
+
 ## API
 You need to establish a RFCOMM connection via bluetooth. Port is 1. 
 

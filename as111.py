@@ -27,9 +27,11 @@
 from bluetooth import *
 import datetime
 import json
+import re
 import sys
 from time import sleep
 
+MAC_PATTERN    = "00:1D:DF:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}"
 
 DEBUG = 3
 INFO = 2
@@ -44,6 +46,7 @@ socket = None
 sequence = 0
 device = {
     "mac" : "",
+    "alias" : "",
     "name" : "",
     "version" : "",
     "datetime" : "",
@@ -68,6 +71,33 @@ capabilities = ["0-VOLUME", "1-DSC", "2-DBB", "3-TREBLE", "4-BASS",
 def _log(msg, level = INFO):
     if loglevel >= level:
         print("%s:\t%s" % (LEVELS[level], msg))
+
+
+
+
+def _read_aliases(target):
+
+    is_mac = re.search(MAC_PATTERN, target)
+    if is_mac:
+        pattern = "(%s)[ \t]+(.+)" % target
+    else:
+        pattern = "(%s)[ \t]+(.*%s.*)" % (MAC_PATTERN, target)
+
+    filename = os.path.join(os.environ['HOME'], ".known_as111")
+    if os.path.isfile(filename):
+        with open(filename, "r") as ins:
+            for line in ins:
+                matcher = re.search(pattern, line)
+                if matcher is not None and len(matcher.groups()) == 2:
+                    _mac = matcher.group(1)
+                    _alias = matcher.group(2)
+
+                    return _mac, _alias
+
+    if is_mac:
+        return target, ""
+    else:
+        return None, target
 
 
 
@@ -109,11 +139,12 @@ def print_info():
 
     print("""
 MAC:     %s
+Alias:   %s
 Name:    %s
 Version: %s
 Time:    %s
 Volume:  %i
-    """ % (device["mac"], device["name"], device["version"], device["datetime"], device["volume"]) )
+    """ % (device["mac"], device["alias"], device["name"], device["version"], device["datetime"], device["volume"]) )
 
 
 
@@ -405,7 +436,7 @@ def set_volume(vol):
 
     _log("Set volume to %i" % vol, INFO)
 
-    raw = send(_get_request(17, [ 0, vol ]))
+    send(_get_request(17, [ 0, vol ]))
 
     _log("volume set to %i" % vol, DEBUG)
 
@@ -418,7 +449,7 @@ def set_alarm_led(status):
 
     _log("Set alarm led to %i" % status, INFO)
 
-    raw = send(_get_request(17, [ 24, status ]))
+    send(_get_request(17, [ 24, status ]))
 
     _log("alarm led set to %i" % status, DEBUG)
 
@@ -430,10 +461,16 @@ if __name__ == "__main__":
         print_help()
         exit(1)
 
-    if len(sys.argv) > 2 and sys.argv[2] == "debug":
-        loglevel = DEBUG
+    if len(sys.argv) > 2 and sys.argv[2] in ["debug", "verbose"]:
+        loglevel = DEBUG if sys.argv[2] == "debug" else INFO
 
-    device["mac"] = sys.argv[1]
+    device["mac"], device["alias"] = _read_aliases(sys.argv[1])
+    if device["mac"] == None:
+        _log("Unable to resolve mac for alias. Check .known_as111 file.", ERROR)
+        exit(1)
+    elif device["alias"] != "":
+        _log("Found alias \"%s\"" % device["alias"], INFO)
+
     connect()
 
     request_device_info()
