@@ -308,6 +308,7 @@ def set_stop_signal():
 
 
 
+
 def clean_stop_signal():
 
     if is_stop_signal():
@@ -727,8 +728,8 @@ if __name__ == "__main__":
             try:
                 param = args[0].split(":")
                 minutes = int(param[0])
-                secs = int(param[1])
-            except:
+                secs = 0 if len(param) != 2 else int(param[1])
+            except
                 _log("time must be given in numeric format mm:ss", ERROR)
                 exit(1)
 
