@@ -23,8 +23,9 @@ $ as111.py
  alarm-led <off|on>      Activates / deactivates alarm LED
 
  Hacks:
- mins-n-secs <secs>      Displays minutes and seconds instead of hour and minutes for <secs> seconds
  date                    Displays date
+ mins-n-secs <secs>      Displays minutes and seconds instead of hour and minutes for <secs> seconds
+ alarm-led bink <n>      let alarm LED blink n times
  countdown <mm:ss>       Starts countdown
  countup <mm:ss>         Starts counting up
  display <secs> <number> Displays any 4-digit <number> for <secs> seconds

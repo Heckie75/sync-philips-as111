@@ -205,8 +205,9 @@ def print_help():
  alarm-led <off|on>      Activates / deactivates alarm LED
 
  Hacks:
- mins-n-secs <secs>      Displays minutes and seconds instead of hour and minutes for <secs> seconds
  date                    Displays date
+ mins-n-secs <secs>      Displays minutes and seconds instead of hour and minutes for <secs> seconds
+ alarm-led bink <n>      let alarm LED blink n times
  countdown <mm:ss>       Starts countdown
  countup <mm:ss>         Starts counting up
  display <secs> <number> Displays any 4-digit <number> for <secs> seconds
@@ -591,6 +592,32 @@ def set_alarm_led(status):
 
 
 
+
+def blink_alarm_led(secs):
+
+    _log("Blink alarm led for %i seconds" % secs, INFO)
+
+    secs *= 2
+
+    while (secs >=0 and not is_stop_signal()):
+
+        send(_get_request(17, [ 24, secs % 2 ]))
+
+        try:
+
+            sleep(.5)
+            secs -= 1
+
+        except:
+
+            _log("displaying minutes and seconds interrupted", WARN)
+            return
+
+    _log("blinked led set for %i seconds" % secs, DEBUG)
+
+
+
+
 if __name__ == "__main__":
 
     if len(sys.argv) < 2:
@@ -664,8 +691,16 @@ if __name__ == "__main__":
 
         elif command == "alarm-led":
 
-            status = 1 if args[0] == "on" else 0
-            set_alarm_led(status)
+            if args[0] == "blink":
+                try:
+                    blink_alarm_led(int(args[1]))
+                    args = args[1:]
+                except:
+                    _log("seconds must be given and numeric", ERROR)
+            else:
+                status = 1 if args[0] == "on" else 0
+                set_alarm_led(status)
+
             args = args[1:]
 
         elif command == "sleep":
