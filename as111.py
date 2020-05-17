@@ -575,6 +575,7 @@ def set_volume(vol):
     _log("Set volume to %i" % vol, INFO)
 
     send(_get_request(17, [ 0, vol ]))
+    device["volume"] = vol
 
     _log("volume set to %i" % vol, DEBUG)
 
