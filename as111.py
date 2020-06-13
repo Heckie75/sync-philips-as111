@@ -31,7 +31,7 @@ import re
 import subprocess
 import sys
 import os
-from time import sleep
+import time
 
 MAC_PATTERN    = "00:1D:DF:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}"
 
@@ -207,7 +207,7 @@ def print_help():
  Hacks:
  date                    Displays date
  mins-n-secs <secs>      Displays minutes and seconds instead of hour and minutes for <secs> seconds
- alarm-led bink <n>      let alarm LED blink n times
+ alarm-led blink <n>     let alarm LED blink n times
  countdown <mm:ss>       Starts countdown
  countup <mm:ss>         Starts counting up
  display <secs> <number> Displays any 4-digit <number> for <secs> seconds
@@ -449,6 +449,9 @@ def sync_time():
 def display_mins_n_secs(secs):
 
     while (secs >=0 and not is_stop_signal()):
+
+        before = time.time()
+
         ts = get_timestamp_as_array()
         ts_string = "%02d%02d-%02d-%02d %02d:%02d:%02d" % (ts[0], ts[1],
                                     ts[2] + 1, ts[3], ts[5], ts[6], ts[6])
@@ -466,8 +469,8 @@ def display_mins_n_secs(secs):
         _log("displayed minutes and seconds", DEBUG)
 
         try:
-            sleep(1)
             secs -= 1
+            time.sleep(max(0, 1 - (time.time() - before)))
         except:
             _log("displaying minutes and seconds interrupted", WARN)
             return
@@ -494,7 +497,7 @@ def display_date():
     _log("displayed date", DEBUG)
 
     try:
-        sleep(1)
+        time.sleep(1)
     except:
         _log("displaying minutes and seconds interrupted", WARN)
         return
@@ -521,7 +524,7 @@ def display_number(secs, number):
     _log("display set", DEBUG)
 
     try:
-        sleep(secs)
+        time.sleep(secs)
     except:
         _log("displaying number interrupted", WARN)
 
@@ -538,6 +541,8 @@ def countdown(minutes, seconds, step = -1):
     remain = total
 
     while (remain >= 0 and not is_stop_signal()):
+
+        before = time.time()
 
         if step == -1:
             display = remain
@@ -558,8 +563,8 @@ def countdown(minutes, seconds, step = -1):
 
         _log("countdown set", DEBUG)
         try:
-            sleep(1)
             remain -= 1
+            time.sleep(max(0, 1 - (time.time() - before)))
         except:
             _log("counting interrupted", WARN)
             return
@@ -607,7 +612,7 @@ def blink_alarm_led(secs):
 
         try:
 
-            sleep(.5)
+            time.sleep(.5)
             secs -= 1
 
         except:
@@ -714,7 +719,7 @@ if __name__ == "__main__":
                 exit(1)
 
             try:
-                sleep(secs)
+                time.sleep(secs)
             except:
                 _log("sleeping interrupted", WARN)
 
@@ -726,7 +731,7 @@ if __name__ == "__main__":
 
         elif command == "countdown" or command == "countup":
 
-            try:
+            try:                
                 param = args[0].split(":")
                 minutes = int(param[0])
                 secs = 0 if len(param) != 2 else int(param[1])
