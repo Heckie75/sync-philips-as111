@@ -88,16 +88,19 @@ def _read_aliases(target):
     else:
         pattern = "(%s)[ \t]+(.*%s.*)" % (MAC_PATTERN, target)
 
-    filename = os.path.join(os.environ['HOME'], ".known_as111")
-    if os.path.isfile(filename):
-        with open(filename, "r") as ins:
-            for line in ins:
-                matcher = re.search(pattern, line)
-                if matcher is not None and len(matcher.groups()) == 2:
-                    _mac = matcher.group(1)
-                    _alias = matcher.group(2)
+    try:
+      filename = os.path.join(os.environ['HOME'], ".known_as111")
+      if os.path.isfile(filename):
+          with open(filename, "r") as ins:
+              for line in ins:
+                  matcher = re.search(pattern, line)
+                  if matcher is not None and len(matcher.groups()) == 2:
+                      _mac = matcher.group(1)
+                      _alias = matcher.group(2)
 
-                    return _mac, _alias
+                      return _mac, _alias
+    except:
+      pass
 
     if is_mac:
         return target, ""

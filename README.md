@@ -128,6 +128,30 @@ DEBUG: disconnect
 DEBUG: disconnected
 ```
 
+## Automatically synchronize time on connect
+
+In order to automatically synchronize time after bluetooth device has connected you have to setup a _udev_ rule and a _systemd service_ as follows:
+
+### Step 1: udev rule
+
+Create a file called ```80-as111.rules``` in folder ```/etc/udev/rules.d``` like this
+
+```
+ACTION=="add", ATTR{name}=="PHILIPS AS111 (AVRCP)", SUBSYSTEM=="input", RUN+="/usr/bin/systemctl --no-block start as111.service"
+```
+
+### Step 2: Configure systemd service
+
+Now create a file called ```as111.service``` in folder ```/etc/systemd/system``` like this:
+
+```
+[Service]
+Type=oneshot
+ExecStart=<path to script>/as111 -
+```
+
+**Note:** Don't forget to change the placeholder to the location where you have placed the ```as111``` script!
+
 ## Setup with Raspberry Pi Zero
 ![Raspberry Pi Zero and Philips AS111/12](IMG_20190724_112047570.jpg "Raspberry Pi Zero and Philips AS111/12")
 
