@@ -1,7 +1,9 @@
-# Philips AS111 Linux Control
+# Philips AS111 Control
 Script in order to control Philips A111/12 docking station
 
 The Philips AS111/12 is a bluetooth speaker with clock and micro-usb port.
+
+This script runs with Linux and Windows.
 
 Usage:
 ```
