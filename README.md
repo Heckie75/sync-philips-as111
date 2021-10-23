@@ -8,8 +8,7 @@ This script runs with Linux and Windows.
 Usage:
 ```
 $ as111.py
-
- USAGE:   as111.py <mac|alias|-|docks|stop> [command1] [params] [command2] ...
+USAGE:   as111.py <mac|alias|-|docks|stop> [command1] [params] [command2] ...
  EXAMPLE: Set volume to 12
           $ ./as111.py vol 12
 
@@ -27,14 +26,17 @@ $ as111.py
  Hacks:
  date                    Displays date
  mins-n-secs <secs>      Displays minutes and seconds instead of hour and minutes for <secs> seconds
- alarm-led bink <n>      let alarm LED blink n times
+ alarm-led blink <n>     let alarm LED blink n times
  countdown <mm:ss>       Starts countdown
  countup <mm:ss>         Starts counting up
  display <secs> <number> Displays any 4-digit <number> for <secs> seconds
  sleep <n>               Hold processing for n seconds
 
  Other:
+ stop                    use in order to stop long running thread, e.g. as111.py stop
  info                    Prints device info
+ list-codecs             lists supported codecs
+ switch-codec <codec>    switch to codec
  json                    Prints device info in JSON format
  verbose                 Verbose mode
  debug                   Debug mode

@@ -143,8 +143,6 @@ class AS111():
 
     def _get_devices_for_windows(self):
 
-        global devices
-
         import serial.tools.list_ports
         _devices = list()
         for p in list(serial.tools.list_ports.comports()):
@@ -155,7 +153,7 @@ class AS111():
                     _devices.append(
                         {
                             "port": self._PORT_SERIAL,
-                            "address" : _mac if "BTPROTO_RFCOMM" in dir(socket) else p.device,
+                            "address": _mac if "BTPROTO_RFCOMM" in dir(socket) else p.device,
                             "mac": _mac,
                             "controller": "",
                             "name": p.description,
@@ -261,6 +259,42 @@ class AS111():
 
         log("disconnected", DEBUG)
 
+    def get_supported_codecs(self):
+
+        codecs = []
+        returncode = 1
+
+        try:
+            returncode, out = self._handle_codecs(["list-codecs"])
+            codecs = json.loads(out)
+        except:
+            pass
+
+        return returncode == 0, codecs
+
+    def set_codec(self, codec):
+
+        returncode = 1
+        try:
+            returncode, out = self._handle_codecs(
+                ["switch-codec", "\"%s\"" % codec])
+        except:
+            pass
+
+        return returncode == 0
+
+    def _handle_codecs(self, commands):
+
+        if self._is_windows():
+            return 1, ""
+
+        p1 = subprocess.Popen(["pactl", "send-message", "/card/bluez_card.%s/bluez" % self._device["mac"].replace(":", "_")] + commands,
+                              stdout=subprocess.PIPE)
+        out, err = p1.communicate()
+        p1.stdout.close()
+
+        return p1.returncode, out.decode("utf8")
+
     def _get_request(self, command, payload=[]):
 
         length = 3 + len(payload)
@@ -289,7 +323,8 @@ class AS111():
                 raw = list(self._serial.read(lresponse))
 
                 if lresponse != len(raw):
-                    log("Length of response is %i but expected %i" % (len(raw), lresponse), WARN)
+                    log("Length of response is %i but expected %i" %
+                        (len(raw), lresponse), WARN)
 
             elif self._client_socket:
                 self._client_socket.send(bytes(data))
@@ -298,7 +333,8 @@ class AS111():
         except:
             log("request failed", ERROR)
 
-        log("<<< %s (%i bytes)" % (" ".join(str(i) for i in raw), len(raw)), DEBUG)
+        log("<<< %s (%i bytes)" % (" ".join(str(i)
+            for i in raw), len(raw)), DEBUG)
         return raw
 
     def _get_timestamp_as_array(self):
@@ -629,6 +665,8 @@ def print_help():
  Other:
  stop                    use in order to stop long running thread, e.g. as111.py stop
  info                    Prints device info
+ list-codecs             lists supported codecs
+ switch-codec <codec>    switch to codec
  json                    Prints device info in JSON format
  verbose                 Verbose mode
  debug                   Debug mode
@@ -784,6 +822,26 @@ if __name__ == "__main__":
 
             as111.display_number(secs, number)
             args = args[2:]
+
+        elif command == "list-codecs":
+
+            success, codecs = as111.get_supported_codecs()
+            if success:
+                print(json.dumps(codecs, indent=2))
+            else:
+                log("Codecs maybe not supported on your system?", ERROR)
+                exit(1)
+
+        elif command == "switch-codec":
+
+            try:
+                success = as111.set_codec(args[0])
+                if not success:
+                    log("Switch to codec \"%s\" failed" % args[0], ERROR)
+                args = args[1:]
+            except:
+                log("Codec must be given", ERROR)
+                exit(1)
 
         elif command == "info":
 
