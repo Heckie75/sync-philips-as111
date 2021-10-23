@@ -8,19 +8,24 @@ This script runs with Linux and Windows.
 Usage:
 ```
 $ as111.py
-USAGE:   as111.py <mac|alias|-|docks|stop> [command1] [params] [command2] ...
+
+ USAGE:   as111.py <mac|alias|-|--|docks|stop> [command1] [params] [command2] ...
  EXAMPLE: Set volume to 12
           $ ./as111.py vol 12
 
           Hacks and command queueing
           as111.py 00:1D:DF:52:F1:91 display 5 8765 countup 0:10 countdown 0:10 mins-n-secs 5
 
- <mac|alias|-|docks>     Use specific mac, alias or "-" for current connected dock
+ <mac|alias|-|docks>     Use specific mac, alias
+                         Use "-" for current connected (and sinked) dock
+                         Use "--" to perform commands for all connected docks
                          "docks" lists all paired docking stations
                          "stop" sends a signal in order to terminate a running as111 process
  sync                    Synchronizes time between PC and dock
  vol [+-]<0-32>          Sets volume to value which is between 0 and 32
  mute                    Sets volume to 0
+ sink                    Sets this device as audio sink
+
  alarm-led <off|on>      Activates / deactivates alarm LED
 
  Hacks:
@@ -41,6 +46,7 @@ USAGE:   as111.py <mac|alias|-|docks|stop> [command1] [params] [command2] ...
  verbose                 Verbose mode
  debug                   Debug mode
  help                    Information about usage, commands and parameters
+
 ```
 
 ## Pre-condition

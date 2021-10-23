@@ -62,6 +62,7 @@ class AS111():
     _client_socket = None
     _serial = None
     _sequence = 0
+    _device = None
     _devices = list()
     _aliases = dict()
 
@@ -79,10 +80,11 @@ class AS111():
     def __init__(self):
 
         if self._is_windows():
-            self._devices, self._device = self._get_devices_for_windows()
+            self._devices = self._get_devices_for_windows()
 
         else:
-            self._devices, self._device = self._get_devices_for_linux()
+            self._devices = self._get_devices_for_linux()
+            self._request_a2dp_state()
 
         self._aliases = self._read_aliases()
         for _d in self._devices:
@@ -127,19 +129,20 @@ class AS111():
                     "version": "",
                     "capabilities": [],
                     "datetime": "",
-                    "volume": 0
+                    "volume": 0,
+                    "sink": "n/a",
+                    "a2dp": "n/a",
+                    "codec": "n/a"
                 })
 
-        _connected_device = None
         for _device in _devices:
             output = _exec_bluetoothctl(
                 ["select %s" % _device["controller"], "info %s" % _device["mac"]])
             for match in re.finditer("Connected: (yes|no)", output):
                 if match.group(1) == "yes":
                     _device["connected"] = True
-                    _connected_device = _device
 
-        return _devices, _connected_device
+        return _devices
 
     def _get_devices_for_windows(self):
 
@@ -150,23 +153,24 @@ class AS111():
                 _mac = "".join(["%s%s" % (s, ":" if i % 2 else "") for i, s in enumerate(
                     p.hwid.split("\\")[-1].split("&")[-1][:12])])[:-1]
                 if re.match(self._MAC_PATTERN, _mac):
-                    _devices.append(
-                        {
-                            "port": self._PORT_SERIAL,
-                            "address": _mac if "BTPROTO_RFCOMM" in dir(socket) else p.device,
-                            "mac": _mac,
-                            "controller": "",
-                            "name": p.description,
-                            "connected": True,  # actually it maybe it's not connected
-                            "alias": "",
-                            "version": "",
-                            "capabilities": [],
-                            "datetime": "",
-                            "volume": 0
-                        }
-                    )
+                    _devices.append({
+                        "port": self._PORT_SERIAL,
+                        "address": _mac if "BTPROTO_RFCOMM" in dir(socket) else p.device,
+                        "mac": _mac,
+                        "controller": "",
+                        "name": p.description,
+                        "connected": True,  # actually it maybe it's not connected
+                        "alias": "",
+                        "version": "",
+                        "capabilities": [],
+                        "datetime": "",
+                        "volume": 0,
+                        "sink": "n/a",
+                        "a2dp": "RUNNING",
+                        "codec": "n/a"
+                    })
 
-        return _devices, _devices[0] if len(_devices) else None
+        return _devices
 
     def _is_windows(self):
 
@@ -211,7 +215,48 @@ class AS111():
 
         return self._devices
 
-    def get_connected_device(self):
+    def get_connected_devices(self):
+
+        return list(filter(lambda d: d["connected"], self._devices))
+
+    def _request_a2dp_state(self):
+
+        returncode, out = self._pacmd(["list-sinks"])
+        if returncode != 0:
+            return
+
+        sink_name_pattern = ".*name: <bluez_sink\.(%s)\.a2dp_sink>" % self._MAC_PATTERN.replace(
+            ":", "_")
+
+        _device = None
+        for l in out.split("\n"):
+
+            l = l.strip()
+            if "name: <bluez_sink." in l:
+                m = re.match(sink_name_pattern, l)
+                _mac = m.groups()[0].replace("_", ":")
+                _device = next(
+                    filter(lambda d: d["mac"] == _mac, self._devices), None)
+                _device["sink"] = l[7:-1]
+
+            elif "name: <" in l:
+                _device = None
+
+            elif _device and "state: " in l:
+                _device["a2dp"] = l[7:]
+
+            elif _device and "bluetooth.codec" in l:
+                _device["codec"] = l[19:-1]
+
+    def get_running_sink(self):
+
+        return next(filter(lambda d: d["a2dp"] == "RUNNING", self._devices), None)
+
+    def set_current_device(self, device):
+
+        self._device = device
+
+    def get_current_device(self):
 
         return self._device
 
@@ -224,8 +269,9 @@ class AS111():
                     socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
                 self._client_socket.connect((address, 1))
                 self._client_socket.settimeout(2)
-                self._device = list(
+                _device = list(
                     filter(lambda _d: _d["address"] == address, self._devices))[0]
+                _device["connected"] == True
 
             elif address.startswith("COM"):
                 import serial
@@ -236,9 +282,12 @@ class AS111():
             log(
                 "Connection failed! Check mac address and device.\n", ERROR)
 
-            return False
+            return None
 
-        log("Connnected to %s" % self._device["address"], DEBUG)
+        self.set_current_device(
+            next(filter(lambda d: d["address"] == address, self._devices), None))
+
+        log("Connnected to %s" % _device["address"], DEBUG)
         self.sync_time()
         self.request_device_info()
 
@@ -256,6 +305,8 @@ class AS111():
 
         except:
             pass
+
+        self.set_current_device(None)
 
         log("disconnected", DEBUG)
 
@@ -283,13 +334,27 @@ class AS111():
 
         return returncode == 0
 
+    def set_sink(self):
+
+        if self._is_windows():
+            return
+
+        self._pacmd(["set-default-sink", self.get_current_device()["sink"]])
+
     def _handle_codecs(self, commands):
 
         if self._is_windows():
             return 1, ""
 
-        p1 = subprocess.Popen(["pactl", "send-message", "/card/bluez_card.%s/bluez" % self._device["mac"].replace(":", "_")] + commands,
-                              stdout=subprocess.PIPE)
+        sink = self.get_current_device()
+        if not sink:
+            return 1, ""
+
+        return self._pacmd(["send-message", "/card/bluez_card.%s/bluez" % sink["mac"].replace(":", "_")] + commands)
+
+    def _pacmd(self, commands):
+
+        p1 = subprocess.Popen(["pacmd"] + commands, stdout=subprocess.PIPE)
         out, err = p1.communicate()
         p1.stdout.close()
 
@@ -616,7 +681,10 @@ Controller: %s
 Name:       %s
 Alias:      %s
 Connected:  %s
-""" % (_device["port"], _device["address"], _device["mac"], _device["controller"], _device["name"], _device["alias"], "yes" if _device["connected"] == True else "no"))
+Sink:       %s
+State:      %s
+Codec:      %s
+""" % (_device["port"], _device["address"], _device["mac"], _device["controller"], _device["name"], _device["alias"], "yes" if _device["connected"] == True else "no", _device["sink"], _device["a2dp"], _device["codec"]))
 
 
 def print_info(device):
@@ -638,19 +706,23 @@ def print_json(device):
 def print_help():
 
     print("""
- USAGE:   as111.py <mac|alias|-|docks|stop> [command1] [params] [command2] ...
+ USAGE:   as111.py <mac|alias|-|--|docks|stop> [command1] [params] [command2] ...
  EXAMPLE: Set volume to 12
           $ ./as111.py vol 12
 
           Hacks and command queueing
           as111.py 00:1D:DF:52:F1:91 display 5 8765 countup 0:10 countdown 0:10 mins-n-secs 5
 
- <mac|alias|-|docks>     Use specific mac, alias or "-" for current connected dock
+ <mac|alias|-|docks>     Use specific mac, alias
+                         Use "-" for current connected (and sinked) dock
+                         Use "--" to perform commands for all connected docks
                          "docks" lists all paired docking stations
                          "stop" sends a signal in order to terminate a running as111 process
  sync                    Synchronizes time between PC and dock
  vol [+-]<0-32>          Sets volume to value which is between 0 and 32
  mute                    Sets volume to 0
+ sink                    Sets this device as audio sink
+ 
  alarm-led <off|on>      Activates / deactivates alarm LED
 
  Hacks:
@@ -672,6 +744,155 @@ def print_help():
  debug                   Debug mode
  help                    Information about usage, commands and parameters
     """)
+
+
+def do_commands(as111, address, commands):
+
+    connected = as111.connect(address)
+    if not connected:
+        log("Unable to connect to %s" % address)
+        return False
+
+    # process commands
+    commands = commands.copy()
+    while(len(commands) > 0):
+        command = commands[0]
+        commands = commands[1:]
+
+        if command == "sink":
+            as111.set_sink()
+
+        elif command == "vol":
+            if commands[0][0] in "-+":
+                device = as111.get_current_device()
+                vol = device["volume"] + int(commands[0])
+            else:
+                vol = int(commands[0])
+
+            try:
+                as111.set_volume(vol)
+            except:
+                log("Volume must be between 0 and 32", ERROR)
+                return False
+
+            commands = commands[1:]
+
+        elif command == "mute":
+
+            as111.set_volume(0)
+
+        elif command == "alarm-led":
+
+            if commands[0] == "blink":
+                try:
+                    as111.blink_alarm_led(int(commands[1]))
+                    commands = commands[1:]
+                except:
+                    log("seconds must be given and numeric", ERROR)
+            else:
+                status = 1 if commands[0] == "on" else 0
+                as111.set_alarm_led(status)
+
+            commands = commands[1:]
+
+        elif command == "sleep":
+
+            try:
+                secs = int(commands[0])
+            except:
+                log("seconds must be numeric", ERROR)
+                return False
+
+            try:
+                time.sleep(secs)
+            except:
+                log("sleeping interrupted", WARN)
+
+            commands = commands[1:]
+
+        elif command == "sync":
+
+            as111.sync_time()
+
+        elif command == "countdown" or command == "countup":
+
+            try:
+                param = commands[0].split(":")
+                minutes = int(param[0])
+                secs = 0 if len(param) != 2 else int(param[1])
+            except:
+                log("time must be given in numeric format mm:ss", ERROR)
+                return False
+
+            as111.countdown(minutes, secs, -1 if command == "countdown" else 1)
+            commands = commands[1:]
+
+        elif command == "mins-n-secs":
+
+            try:
+                secs = int(commands[0])
+            except:
+                log("seconds must be numeric", ERROR)
+                return False
+            as111.display_mins_n_secs(secs)
+            commands = commands[1:]
+
+        elif command == "date":
+
+            as111.display_date()
+
+        elif command == "display":
+
+            try:
+                secs = int(commands[0]) % 60
+                number = int(commands[1])
+            except:
+                log("seconds must be numeric", ERROR)
+                return False
+
+            as111.display_number(secs, number)
+            commands = commands[2:]
+
+        elif command == "list-codecs":
+
+            success, codecs = as111.get_supported_codecs()
+            if success:
+                print(json.dumps(codecs, indent=2))
+            else:
+                log("Codecs maybe not supported on your system?", ERROR)
+                return False
+
+        elif command == "switch-codec":
+
+            try:
+                success = as111.set_codec(commands[0])
+                if not success:
+                    log("Switch to codec \"%s\" failed" % commands[0], ERROR)
+                commands = commands[1:]
+            except:
+                log("Codec must be given", ERROR)
+                return False
+
+        elif command == "info":
+
+            print_info(as111.get_current_device())
+
+        elif command == "json":
+
+            print_json(as111.get_current_device())
+
+        elif command == "debug":
+
+            loglevel = DEBUG
+
+        elif command == "verbose":
+
+            loglevel = INFO
+
+    as111.sync_time()
+    as111.disconnect()
+
+    return True
 
 
 if __name__ == "__main__":
@@ -699,18 +920,28 @@ if __name__ == "__main__":
         print_help()
         exit(0)
 
+    _devices = as111.get_connected_devices()
+    if len(_devices) == 0:
+        log("No device connected.", ERROR)
+        exit(1)
+
+    addresses = list()
+    if sys.argv[1] == "--":
+
+        addresses.extend(map(lambda d: d["address"], _devices))
+
     elif sys.argv[1] == "-":
-        _device = as111.get_connected_device()
-        if _device == None:
-            log("No device connected.", ERROR)
-            exit(1)
+
+        _device = as111.get_running_sink()
+        if not _device:
+            _device = _devices[0]
 
         address, alias = as111.get_address_n_alias(_device["address"])
         log("use %s, %s" % (address, alias or "(w/o alias)"), INFO)
+        addresses.append(address)
 
     else:
         address, alias = as111.get_address_n_alias(sys.argv[1])
-
         if address == None:
             log("Unable to resolve address for alias. Check .known_as111 file.", ERROR)
             exit(1)
@@ -718,148 +949,13 @@ if __name__ == "__main__":
         elif alias:
             log("Found alias \"%s\"" % alias, INFO)
 
-    as111.clean_stop_signal()
-    connected = as111.connect(address)
-    if not connected:
-        log("Unable to connect to %s" % address)
-        exit(1)
+        addresses.append(address)
 
-    # process commands
-    args = sys.argv[1:]
-    while(len(args) > 0):
-        command = args[0]
-        args = args[1:]
+    commands = sys.argv[1:]
+    for address in addresses:
+        success = do_commands(as111, address, commands)
+        if not success:
+            break
 
-        if command == "vol":
-
-            try:
-                if args[0][0] in "-+":
-                    device = as111.get_connected_device()
-                    vol = device["volume"] + int(args[0])
-                else:
-                    vol = int(args[0])
-
-                as111.set_volume(vol)
-
-            except:
-                log("Volume must be between 0 and 32", ERROR)
-                exit(1)
-
-            args = args[1:]
-
-        elif command == "mute":
-
-            as111.set_volume(0)
-
-        elif command == "alarm-led":
-
-            if args[0] == "blink":
-                try:
-                    as111.blink_alarm_led(int(args[1]))
-                    args = args[1:]
-                except:
-                    log("seconds must be given and numeric", ERROR)
-            else:
-                status = 1 if args[0] == "on" else 0
-                as111.set_alarm_led(status)
-
-            args = args[1:]
-
-        elif command == "sleep":
-
-            try:
-                secs = int(args[0])
-            except:
-                log("seconds must be numeric", ERROR)
-                exit(1)
-
-            try:
-                time.sleep(secs)
-            except:
-                log("sleeping interrupted", WARN)
-
-            args = args[1:]
-
-        elif command == "sync":
-
-            as111.sync_time()
-
-        elif command == "countdown" or command == "countup":
-
-            try:
-                param = args[0].split(":")
-                minutes = int(param[0])
-                secs = 0 if len(param) != 2 else int(param[1])
-            except:
-                log("time must be given in numeric format mm:ss", ERROR)
-                exit(1)
-
-            as111.countdown(minutes, secs, -1 if command == "countdown" else 1)
-            args = args[1:]
-
-        elif command == "mins-n-secs":
-
-            try:
-                secs = int(args[0])
-            except:
-                log("seconds must be numeric", ERROR)
-                exit(1)
-            as111.display_mins_n_secs(secs)
-            args = args[1:]
-
-        elif command == "date":
-
-            as111.display_date()
-
-        elif command == "display":
-
-            try:
-                secs = int(args[0]) % 60
-                number = int(args[1])
-            except:
-                log("seconds must be numeric", ERROR)
-                exit(1)
-
-            as111.display_number(secs, number)
-            args = args[2:]
-
-        elif command == "list-codecs":
-
-            success, codecs = as111.get_supported_codecs()
-            if success:
-                print(json.dumps(codecs, indent=2))
-            else:
-                log("Codecs maybe not supported on your system?", ERROR)
-                exit(1)
-
-        elif command == "switch-codec":
-
-            try:
-                success = as111.set_codec(args[0])
-                if not success:
-                    log("Switch to codec \"%s\" failed" % args[0], ERROR)
-                args = args[1:]
-            except:
-                log("Codec must be given", ERROR)
-                exit(1)
-
-        elif command == "info":
-
-            print_info(as111.get_connected_device())
-
-        elif command == "json":
-
-            print_json(as111.get_connected_device())
-
-        elif command == "debug":
-
-            loglevel = DEBUG
-
-        elif command == "verbose":
-
-            loglevel = INFO
-
-    as111.sync_time()
-    as111.disconnect()
     as111.clean_stop_signal()
     exit(0)
